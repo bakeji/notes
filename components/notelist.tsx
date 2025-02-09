@@ -3,7 +3,7 @@ import { useNoteContext } from "@/context/noteContext"
 
 
 export default function NoteList(){
-    const {handleNoteClick, formatDate, selectedNotes, archivedNotes, notes, showAllNote, showTags, selectedTag, showArchivedNote} =useNoteContext();
+    const {handleNoteClick, formatDate, selectedNotes, createNewNote, archivedNotes, notes, showAllNote, showTags, selectedTag, showArchivedNote} =useNoteContext();
     const notesArray = showAllNote? notes :archivedNotes
     const allNotesArray = selectedTag!==''? showTags: notesArray
     
@@ -16,7 +16,7 @@ export default function NoteList(){
      
     return(
         <div className="w-[25%] border-r-[1px] border-solid border-[#E0E4EA]">
-            <button className="mt-[10px] w-[95%] font-inter text-[#ffffff] font-[500] text-[14px] bg-[#335CFF] rounded-[8px] p-[10px]"> + Create New Note</button>
+            <button onClick={createNewNote} className="mt-[10px] w-[95%] font-inter text-[#ffffff] font-[500] text-[14px] bg-[#335CFF] rounded-[8px] p-[10px]"> + Create New Note</button>
 
             <div className="w-[95%] flex justify-center gap-2 flex-col mt-[20px]">
                {selectedTag!=="" && <p className="font-inter text-[14px] font-[400] text-[#2B303B] ">{`All notes with the ”${selectedTag}” tag are shown here.`}</p> }

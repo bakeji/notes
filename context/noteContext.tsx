@@ -12,7 +12,7 @@ export type Note={
 }
  export type notestype = {
     notes: Note[],
-    selectedNotes: Note ,
+    selectedNotes: Note | null ,
     formatDate: (isoDateString: string) => string
     handleNoteClick: (note: Note) => void;
     showAllNote: boolean,
@@ -22,7 +22,9 @@ export type Note={
      archivedNotes: Note[],
      showSelectedTagBtn: (tag:string)=>void,
      selectedTag: string,
-     showTags: Note[]
+     showTags: Note[],
+     createNewNote: ()=>void,
+     isNewNote: boolean
     
   };
 
