@@ -3,15 +3,19 @@ import { useNoteContext } from "@/context/noteContext";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Note } from "@/context/noteContext";
+import { getDatabase, push, ref, set, get } from "firebase/database";
+import { database } from "@/firebase";
+import { app } from "@/firebase";
+import { getAuth } from "firebase/auth";
 export default function NoteContent() {
   const { selectedNotes, formatDate, isNewNote } = useNoteContext();
-  console.log(isNewNote);
+  const userId = getAuth(app).currentUser?.uid
   const [textInput, setTextInput] = useState<Note>({
     title: ""  ,
     tags:[],
     content: "",
     lastEdited: "", 
-    isArchived: false 
+    isArchived: false ,
   });
 
   useEffect(()=>{
@@ -30,7 +34,7 @@ export default function NoteContent() {
         tags:selectedNotes.tags,
         content: selectedNotes.content,
         lastEdited: selectedNotes.lastEdited ,
-        isArchived: selectedNotes.isArchived
+        isArchived: selectedNotes.isArchived,
       });
       
     }
@@ -55,6 +59,29 @@ export default function NoteContent() {
       }));
     }
   }
+
+
+  async function saveNote(){
+    const db = getDatabase(app);
+    const noteRef = ref(db,'users/notes /' + userId);
+    try{
+      const snapshot = await get(noteRef);
+      if(userId){
+        const newNoteRef = push(noteRef);
+        set(newNoteRef,textInput
+        );
+      }else{
+      }
+    }
+    catch(error){
+
+    }finally{
+
+    }
+
+  }
+  
+  
 
   return (
     <div className={`w-[60%] mt-[20px] ml-[20px]`}>
@@ -111,7 +138,7 @@ export default function NoteContent() {
       </div>
 
       <div className="flex items-start mt-[20px] gap-4 ">
-        <button className="w-[107px] h-[37px] px-[12px] text-center rounded-[8px] font-inter font-[500] text-[14px] bg-[#335CFF] text-[#FFFFFF]">
+        <button onClick={saveNote} className="w-[107px] h-[37px] px-[12px] text-center rounded-[8px] font-inter font-[500] text-[14px] bg-[#335CFF] text-[#FFFFFF]">
           Save Note
         </button>
         <button className="w-[87px] h-[37px] px-[12px] text-center rounded-[8px] font-inter font-[500] text-[14px] bg-[#F3F5F8] text-[#525866]">

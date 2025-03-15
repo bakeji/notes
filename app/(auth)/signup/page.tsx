@@ -43,6 +43,7 @@ export default function signup(){
           if (goodPasswordLength && formDetails.password !== '' && formDetails.email !== '') {
             const userCredential = await createUserWithEmailAndPassword(auth, formDetails.email, formDetails.password);
             const user = userCredential.user;
+            console.log(user.uid)
             setShowToast(true);
             console.log(showToast)
             setToastMessage('sign up successful');

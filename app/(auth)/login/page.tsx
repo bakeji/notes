@@ -41,6 +41,7 @@ export default function LogIn(){
         if (formDetails.email !== "" && formDetails.password !== "") {
             const userCredential = await signInWithEmailAndPassword(auth, formDetails.email, formDetails.password);
             const user = userCredential.user;
+            console.log(user.uid)
             router.push('/');
           }  else {
             setShowError(true);

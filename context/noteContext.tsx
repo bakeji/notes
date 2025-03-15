@@ -14,7 +14,7 @@ export type Note={
     notes: Note[],
     selectedNotes: Note | null ,
     formatDate: (isoDateString: string) => string
-    handleNoteClick: (note: Note) => void;
+    handleNoteClick: (id:number) => void;
     showAllNote: boolean,
     showArchivedNote: boolean, 
      showAllNoteBtn: ()=>void, 

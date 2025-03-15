@@ -1,25 +1,54 @@
 'use client'
 import AllNotes from "@/components/allNotes";
 import SideBar from "@/components/sidenav";
-import data from "@/data.json";
 import { Note, NoteContext } from "@/context/noteContext";
 import { useEffect, useState } from "react";
+import { getDatabase, push, ref, set, get, onValue } from "firebase/database";
+import { database } from "@/firebase";
+import { app } from "@/firebase";
+import { getAuth } from "firebase/auth";
 
 
 export default function Page(){
-  const notes = data.notes;
-  const archivedNotes = notes.filter(note=>note.isArchived)
+  // const notes = data.notes;
+  
+  const userId =  getAuth(app).currentUser?.uid
+  const [notes, setNotes] = useState<Note[]>([])
+  const archivedNotes = notes?.filter(note=>note.isArchived)
   const [selectedTag, setSelectedTag] = useState('')
-  const showTags = notes.filter(note => note.tags.includes(selectedTag))
-  const [selectedNotes, setSelectedNote] = useState<Note | null>(notes[0]);
+  const showTags = notes?.filter(note => note?.tags?.includes(selectedTag))
+  const [selectedNotes, setSelectedNote] = useState<Note | null>(null);
   const [showAllNote, setShowAllNote] = useState(true)
   const [showArchivedNote, setShowArchivedNote] = useState(false)
-  const [isNewNote, setIsNewNote] = useState(false) 
-  
+  const [isNewNote, setIsNewNote] = useState(false)
 
+
+  function GetNotes(){
+  const db = getDatabase(app);
+  const noteRef = ref(db,'users/notes /' + userId)
+  onValue(noteRef, (snapshot) => {
+    if (snapshot.exists()) {
+      const notesData = snapshot.val();
+     const allNotes= Object.values(notesData) as Note[];
+      setNotes(allNotes)
+}else{
+  setNotes([])
+}
+  })
+  }
   
-function handleNoteClick(note: Note){
-    setSelectedNote(note) 
+ useEffect(()=>{
+  GetNotes()
+ },[])
+
+ useEffect(() => {
+  if (notes.length > 0 && !selectedNotes) {
+    setSelectedNote(notes[0]);
+  }
+}, [notes]);
+  
+function handleNoteClick(id:number){
+    setSelectedNote(notes[id]) 
     setIsNewNote(false)
 }
 
@@ -53,7 +82,7 @@ useEffect(()=>{
   setSelectedNote(showTags[0])
   }
 },[selectedTag, showSelectedTagBtn])
-console.log(selectedNotes)
+
 
 function createNewNote(){
   setIsNewNote(true)

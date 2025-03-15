@@ -38,7 +38,7 @@ export default function SideBar(){
                 <p className="text-[#717784] font-inter font-[500] text-[14px]">Tags</p>
 
                 <div className="flex flex-col ml-3 gap-5 justify-center " >
-                    {uniqueTags.map((tag, index) => (
+                    {uniqueTags?.map((tag, index) => (
                         <div key={index} className={`flex items-center justify-between p-2 ${selectedTag && selectedTag==tag? 'bg-[#F3F5F8]': ""}`}>
                     <button onClick={()=>showSelectedTagBtn(tag)} key={index} className="flex items-center gap-3" > 
                         <Image width={20} height={20} src={selectedTag && selectedTag===tag? "/Tag2.png": "/Tag.png"} alt="tag" />
