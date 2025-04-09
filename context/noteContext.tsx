@@ -2,7 +2,8 @@
 import { createContext, useContext } from "react"
 
 
-export type Note={
+export interface Note{
+  id?: string;
   title: string;
   tags: string[];
   content: string;
@@ -24,7 +25,15 @@ export type Note={
      selectedTag: string,
      showTags: Note[],
      createNewNote: ()=>void,
-     isNewNote: boolean
+     isNewNote: boolean,
+     textInput: {
+      title: string;
+      tags: string[];
+      content: string;
+      lastEdited: string;
+      isArchived: boolean;
+     },
+    setTextInput: React.Dispatch<React.SetStateAction<Note>>,
     
   };
 

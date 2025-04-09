@@ -8,16 +8,11 @@ import { database } from "@/firebase";
 import { app } from "@/firebase";
 import { getAuth } from "firebase/auth";
 export default function NoteContent() {
-  const { selectedNotes, formatDate, isNewNote } = useNoteContext();
-  const userId = getAuth(app).currentUser?.uid
-  const [textInput, setTextInput] = useState<Note>({
-    title: ""  ,
-    tags:[],
-    content: "",
-    lastEdited: "", 
-    isArchived: false ,
-  });
-
+  const { selectedNotes, formatDate, isNewNote, textInput, setTextInput} = useNoteContext();
+  const userId = "YbzpPIhpIWfW7VNLE5FnJTCiU602" //getAuth(app).currentUser?.uid
+  
+ 
+  console.log(userId)
   useEffect(()=>{
     if(isNewNote){
       setTextInput({
@@ -60,27 +55,37 @@ export default function NoteContent() {
     }
   }
 
-
-  async function saveNote(){
+  async function saveNote() {
     const db = getDatabase(app);
-    const noteRef = ref(db,'users/notes /' + userId);
-    try{
-      const snapshot = await get(noteRef);
-      if(userId){
-        const newNoteRef = push(noteRef);
-        set(newNoteRef,textInput
-        );
-      }else{
+    const noteRef  = ref(db,'users/notes/'+ userId);
+    const currentTimestamp = new Date().toISOString();
+    
+    try {
+      if (userId) {
+        if (!isNewNote && selectedNotes && selectedNotes.id) {
+          const specificNoteRef = ref(db, `users/notes/${userId}/${selectedNotes.id}`);
+          
+          await set(specificNoteRef, {
+            ...textInput,
+            lastEdited: currentTimestamp,
+            id: selectedNotes.id
+          });
+        } else {
+          const newNoteRef = push(noteRef);
+          const newKey = newNoteRef.key;
+          await set(newNoteRef, {
+            ...textInput,
+           lastEdited: currentTimestamp,
+            id: newKey
+          });
+        }
       }
+    } catch (error) {
+      console.error("Error saving note:", error);
     }
-    catch(error){
-
-    }finally{
-
-    }
-
   }
-  
+
+
   
 
   return (
@@ -88,10 +93,10 @@ export default function NoteContent() {
       <input
         className="border-none outline-none w-[100%] h-[30px] font-inter font-[500] text-[24px] text-[#0E121B] mb-3 placeholder:text-[#0E121B] placeholder:font-[700]"
         type="text"
-        value={textInput.title}
+        value={textInput?.title}
         onChange={handleChange}
         name="title"
-        placeholder={textInput.title ? "" : "Enter a title..."}
+        placeholder={textInput?.title ? "" : "Enter a title..."}
       />
       <div className="flex items-start flex-col gap-3 border-b-[1px] border-solid w-[95%]">
         <div className="flex w-[100%] items-center justify-center ">
@@ -105,10 +110,10 @@ export default function NoteContent() {
           <input
             className="w-[100%] border-none outline-none font-inter text-[14px] font-[400] text-[#2B303B] "
             type="text"
-            value={textInput?.tags?.join(", ")}
+            value={(textInput?.tags || []).join(", ")}
             onChange={handleChange}
             name="tags"
-            placeholder={textInput.tags.length > 0 ? "" : "Add tags separated by commas (e.g. Work, Planning)"}
+            placeholder={textInput?.tags?.length > 0 ? "" : "Add tags separated by commas (e.g. Work, Planning)"}
           />
         </div>
 
@@ -121,8 +126,7 @@ export default function NoteContent() {
             Last edited
           </p>
           <p className="w-[100%] border-none outline-none font-inter text-[14px] font-[400] text-[#99A0AE] ">
-            {textInput.lastEdited? formatDate(textInput.lastEdited): "Not yet saved"}
-            
+            {textInput.lastEdited? formatDate(textInput.lastEdited): "Not yet saved"}            
           </p>
         </div>
       </div>
