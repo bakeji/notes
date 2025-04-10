@@ -33,6 +33,11 @@ export interface Note{
       lastEdited: string;
       isArchived: boolean;
      },
+     searchValue: string,
+      handleSearchValue: (e: React.ChangeEvent<HTMLInputElement>)=> void,
+      showSearchResult: boolean,
+      showSettings: boolean,
+      setShowSettings: React.Dispatch<React.SetStateAction<boolean>>,
     setTextInput: React.Dispatch<React.SetStateAction<Note>>,
     
   };

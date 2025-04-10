@@ -21,7 +21,9 @@ export default function Page(){
   const [showAllNote, setShowAllNote] = useState(true)
   const [showArchivedNote, setShowArchivedNote] = useState(false)
   const [isNewNote, setIsNewNote] = useState(true)
-
+  const [searchValue, setSearchValue]= useState('')
+  const [showSearchResult, setShowSearchResult] = useState(false)
+  const [showSettings, setShowSettings] = useState(false)
   console.log(archivedNotes)
   console.log(notes)
   console.log(showArchivedNote)
@@ -83,6 +85,7 @@ function showAllNoteBtn(){
   setShowArchivedNote(false)
   setSelectedNote(notes[0])
   setSelectedTag('')
+  setShowSearchResult(false)
 }
 
 //  show Archived Notes button
@@ -92,6 +95,7 @@ function showArchivedNoteBtn(){
   setSelectedNote(archivedNotes[0])
   setIsNewNote(false)
   setSelectedTag('')
+  setShowSearchResult(false)
 }
 // show selected tags
 function showSelectedTagBtn(tag:string){
@@ -99,6 +103,7 @@ function showSelectedTagBtn(tag:string){
   setShowArchivedNote(false)
   setIsNewNote(false)
   setSelectedTag(tag)
+  setShowSearchResult(false)
 }
 useEffect(()=>{
   if(selectedTag !== ''){
@@ -111,8 +116,20 @@ function createNewNote(){
   setIsNewNote(true)
   console.log('new')
   setSelectedNote(null)
+  setShowSearchResult(false)
+}
+function handleSearchValue(e:React.ChangeEvent<HTMLInputElement>){
+  setSearchValue(e.target.value)
+
 }
 
+useEffect(()=>{
+  if(searchValue !== ''){
+  setShowSearchResult(true)
+}else{
+  setShowSearchResult(false)
+}
+}, [searchValue])
 
 function formatDate(isoDateString: string): string {
   const date = new Date(isoDateString);
@@ -129,7 +146,7 @@ function formatDate(isoDateString: string): string {
   return `${day} ${monthName} ${year}`;
 }
   return(
-    <NoteContext.Provider value={{notes, archivedNotes, selectedTag, textInput, setTextInput, showTags, showSelectedTagBtn, handleNoteClick, selectedNotes, formatDate, showAllNote, showArchivedNote, showAllNoteBtn, showArchivedNoteBtn, createNewNote, isNewNote}}>
+    <NoteContext.Provider value={{notes, showSettings, setShowSettings, showSearchResult, archivedNotes, selectedTag, searchValue, handleSearchValue, textInput, setTextInput, showTags, showSelectedTagBtn, handleNoteClick, selectedNotes, formatDate, showAllNote, showArchivedNote, showAllNoteBtn, showArchivedNoteBtn, createNewNote, isNewNote}}>
     <div className="flex w-[100%] px-[20px] h-screen box-border " >
       <SideBar/>
       <hr className="h-[100%] border-[1px] border-[#E0E4EA]"/>

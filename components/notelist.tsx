@@ -3,8 +3,11 @@ import { useNoteContext } from "@/context/noteContext"
 
 
 export default function NoteList(){
-    const {handleNoteClick, formatDate, selectedNotes, createNewNote, archivedNotes, notes, showAllNote, showTags, selectedTag, showArchivedNote} =useNoteContext();
-    const notesArray = showAllNote? notes :archivedNotes
+    const {handleNoteClick, formatDate, selectedNotes, createNewNote, archivedNotes, notes, showAllNote, showTags, selectedTag, showArchivedNote, searchValue, showSearchResult} =useNoteContext();
+    const notesArrays = showAllNote? notes :archivedNotes
+    const searchResults = notesArrays?.filter((note) => note.title.toLowerCase().includes(searchValue.toLowerCase()) || note.content.toLowerCase().includes(searchValue.toLowerCase()) ||note.tags.some((tag) => tag.toLowerCase().includes(searchValue.toLowerCase())))
+    console.log(searchResults)
+    const notesArray = showSearchResult? searchResults: notesArrays
     const allNotesArray = selectedTag!==''? showTags: notesArray
     
     
@@ -18,6 +21,9 @@ export default function NoteList(){
                {showArchivedNote && <p className="font-inter text-[14px] font-[400] text-[#2B303B] ">All your archived notes are stored here. You can restore or delete them anytime.</p>}
                {!archivedNotes && showArchivedNote  && <div className="bg-[#F3F5F8] rounded-[6px] w-[100%] border-[1px] border-solid border-[#E0E4EA] p-[2px]">
                     <p>No notes have been archived yet. Move notes here for safekeeping, or create a new note.</p>
+                </div>}
+              {showSearchResult && searchResults.length <1 &&  <div className="bg-[#F3F5F8] rounded-[6px] w-[100%] border-[1px] border-solid border-[#E0E4EA] p-[1px] ">
+                    <p>No notes match your search. Try a different keyword or <span className="text-[#0E121B]"><button onClick={createNewNote} className="underline  outline-none">create a new note.</button></span></p>
                 </div>}
                 {allNotesArray?.map((note, index)=>(
                 <div key={index} className={`w-[100%] border-t-[1px] border-solid border-[#E0E4EA] p-[2px] ${selectedNotes && selectedNotes === note? "bg-[#F3F5F8] rounded-[6px] border-none": ''}`} >
