@@ -17,9 +17,11 @@ export interface Note{
     formatDate: (isoDateString: string) => string
     handleNoteClick: (id:number) => void;
     showAllNote: boolean,
+    setShowAllNote:React.Dispatch<React.SetStateAction<boolean>>,
     showArchivedNote: boolean, 
      showAllNoteBtn: ()=>void, 
      showArchivedNoteBtn: ()=>void,
+     setShowArchivedNote: React.Dispatch<React.SetStateAction<boolean>>,
      archivedNotes: Note[],
      showSelectedTagBtn: (tag:string)=>void,
      selectedTag: string,

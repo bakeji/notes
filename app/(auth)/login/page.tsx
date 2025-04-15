@@ -7,9 +7,15 @@ import { app } from "@/firebase";
 import SignUpWithGoogle  from "../google";
 import Password from "@/components/password";
 import Loading from "@/components/loading";
-import Toast from "@/components/toast";
-import ToastError from "@/components/errortoast";
-
+import { useToast } from "@/hooks/use-toast";
+import { AlertCircle } from "lucide-react"
+ 
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert"
+ 
 export default function LogIn(){
    
     const [formDetails, setFormDetails] = useState({
@@ -17,11 +23,9 @@ export default function LogIn(){
         password: ""
     })
     const [loading, setLoading] = useState(false)
-    const [showToast, setShowToast] = useState(false)
-    const [toastMessage, setToastMessage] = useState('')
     const [showError, setShowError] = useState(false)
     const [errorMessages, setErrorMessages] = useState('')
-
+     const { toast } = useToast()
 
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -29,6 +33,7 @@ export default function LogIn(){
             ...formDetails,
             [e.target.name]: e.target.value
         })
+        setShowError(false)
     }
 
     const router = useRouter()
@@ -41,7 +46,9 @@ export default function LogIn(){
         if (formDetails.email !== "" && formDetails.password !== "") {
             const userCredential = await signInWithEmailAndPassword(auth, formDetails.email, formDetails.password);
             const user = userCredential.user;
-            console.log(user.uid)
+            toast({
+                description: 'Login sucessful'
+            })
             router.push('/');
           }  else {
             setShowError(true);
@@ -50,9 +57,8 @@ export default function LogIn(){
           }}
           catch (error) {
             const errorMessage = (error as Error).message;
-            setShowError(true);
+            setShowError(true); 
             setErrorMessages(errorMessage);
-            console.log(errorMessage);
           } finally {
             setLoading(false);
           }
@@ -60,9 +66,15 @@ export default function LogIn(){
       
     return(
         <div className="w-[100%] h-[100vh]  flex justify-center items-center bg-[#F3F5F8]">
-            {showToast && <Toast toastMessage={toastMessage}/>}
-            {showError && <ToastError toastMessage={errorMessages}/>}
+
             <div className="bg-white h-fit w-[35%] my-[0] mx-[auto] flex flex-col items-center border-[1px] border-s-[#E0E4EA] shadow-lg rounded-[12px] p-[24px]">
+                           {showError && <Alert variant="destructive">
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertTitle>Error</AlertTitle>
+                    <AlertDescription>
+                        {errorMessages}
+                    </AlertDescription>
+                    </Alert>}
                 <div className="mb-[20px]"> 
                     <Image width={95} height={28} src="/logo.png" alt="logo"/>
                 </div>

@@ -163,7 +163,7 @@ function formatDate(isoDateString: string): string {
   return `${day} ${monthName} ${year}`;
 }
   return(
-    <NoteContext.Provider value={{notes,colorTheme,fontTheme, setFontTheme, setColorTheme, showSettings, showSettingsBtn, selectedSetting, setSelectedSetting, setShowSettings, showSearchResult, archivedNotes, selectedTag, searchValue, handleSearchValue, textInput, setTextInput, showTags, showSelectedTagBtn, handleNoteClick, selectedNotes, formatDate, showAllNote, showArchivedNote, showAllNoteBtn, showArchivedNoteBtn, createNewNote, isNewNote}}>
+    <NoteContext.Provider value={{notes,setShowArchivedNote, setShowAllNote ,colorTheme,fontTheme, setFontTheme, setColorTheme, showSettings, showSettingsBtn, selectedSetting, setSelectedSetting, setShowSettings, showSearchResult, archivedNotes, selectedTag, searchValue, handleSearchValue, textInput, setTextInput, showTags, showSelectedTagBtn, handleNoteClick, selectedNotes, formatDate, showAllNote, showArchivedNote, showAllNoteBtn, showArchivedNoteBtn, createNewNote, isNewNote}}>
     <div className="flex w-[100%] px-[20px] h-screen box-border " >
       <SideBar/>
       <AllNotes />

@@ -5,7 +5,15 @@ import { useState } from "react";
 import { getAuth, updatePassword, User } from "firebase/auth";
 import {app} from "@/firebase";
 import { useRouter } from 'next/router'
-import Toast from "@/components/toast";
+import { useToast } from "@/hooks/use-toast";
+import { AlertCircle } from "lucide-react";
+import Loading from "@/components/loading";
+ 
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert"
 
 
 
@@ -16,12 +24,11 @@ const [formDetails, setFormDetails] = useState({
 })
 const [passwordMatch, setPasswordMatch] = useState(false)
 const [goodPasswordLength, setGoodPasswordLength] = useState(true)
-const [showToast, setShowToast] = useState(false)
-const [toastMessage, setToastMessage] = useState('')
 const [loading, setLoading] = useState(false)
 const [showError, setShowError] = useState(false)
 const [errorMessages, setErrorMessages] = useState('')
 const router = useRouter()
+const { toast } = useToast()
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setFormDetails({
@@ -42,8 +49,9 @@ const router = useRouter()
         if (passwordMatch && goodPasswordLength) {
             const user = auth.currentUser as User;
             await updatePassword(user, formDetails.password);
-            setShowToast(true);
-            setToastMessage('Password reset successful');
+            toast({
+                description: 'Password reset successful'
+            })
             router.push('/login');
           }else {
             setShowError(true);
@@ -61,7 +69,14 @@ const router = useRouter()
       }
     return(
         <div className="w-[100%] h-[100vh]  flex justify-center items-center bg-[#F3F5F8]">
-             { showToast && <Toast toastMessage= {toastMessage}/>}
+             {showError && 
+             <Alert variant="destructive">
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>Error</AlertTitle>
+                <AlertDescription>
+                    {errorMessages}
+                </AlertDescription>
+            </Alert>}
             <div className="bg-white h-fit w-[39%] my-[0] mx-[auto] flex flex-col items-center border-[1px] border-s-[#E0E4EA] shadow-lg rounded-[12px] p-[20px]">
                 <div className="mb-[20px]"> 
                     <Image width={95} height={28} src="/logo.png" alt="logo"/>
@@ -85,7 +100,7 @@ const router = useRouter()
                     </div>
                   
 
-                        <button type="submit" className="w-[100%] h-[44px] p-[14px] text-white text-[16px] font-[600] font-inter rounded-[8px] bg-[#335CFF] ">Reset Password</button>
+                        <button type="submit" className="w-[100%] h-[44px] p-[14px] text-white text-[16px] font-[600] font-inter rounded-[8px] bg-[#335CFF] ">{loading? <Loading /> : 'Reset Password'}</button>
                    
                 </form>
             </div>

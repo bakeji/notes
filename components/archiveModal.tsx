@@ -34,7 +34,7 @@ import Image from "next/image"
     </AlertDialogHeader>
     <AlertDialogFooter>
       <AlertDialogCancel className='bg-[#F3F5F8]'>Cancel</AlertDialogCancel>
-      <AlertDialogAction className="bg-[#335CFF]" onClick={archOrRestNote}>{showArchivedNote? 'Archive Note': 'Restore Note'}</AlertDialogAction>
+      <AlertDialogAction className="bg-[#335CFF]" onClick={archOrRestNote}>{showArchivedNote?'Restore Note': 'Archive Note'}</AlertDialogAction>
     </AlertDialogFooter>
   </AlertDialogContent>
     )
