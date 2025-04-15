@@ -1,11 +1,11 @@
 import { useNoteContext } from "@/context/noteContext"
 import Image from "next/image"
 export default function Topnav(){
-    const{searchValue, showSearchResult, handleSearchValue} = useNoteContext()
+    const{searchValue, showSearchResult,showSettingsBtn, selectedTag, handleSearchValue, showArchivedNote, showAllNote} = useNoteContext()
     
     return(
         <div className="w-[90%] flex items-center justify-between ml-8 py-4">
-            {!showSearchResult && <h1 className="font-inter font-[700] text-[24px] text-[#0E121B]">All Notes</h1>}
+            {!showSearchResult && <h1 className={`font-inter font-[700] text-[24px] ${selectedTag? 'text-[#525866]' : 'text-[#0E121B]'} `}>{showAllNote? 'All Notes': showArchivedNote? "Archived Notes": `Notes Tagged:`} <span className="text-[#0E121B]">{selectedTag}</span></h1>}
            {searchValue!=='' && showSearchResult &&  <p className="font-inter text-[24px] font-[700] text-[#525866]">Showing results for: <span className="text-[#0E121B]">{searchValue}</span></p>}
 
             <div className="flex items-center justify-center gap-5  ">
@@ -21,7 +21,7 @@ export default function Topnav(){
                         />
                 </div>
 
-                <Image width={42} height={43} src="/settings.png" alt="settings" />
+               <button  onClick={showSettingsBtn} className="cursor-pointer outline-none border-none"> <Image width={42} height={43} src="/settings.png" alt="settings" /></button>
             </div>
           
         </div>

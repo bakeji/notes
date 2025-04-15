@@ -7,12 +7,14 @@ import { getDatabase, push, ref, set, get } from "firebase/database";
 import { database } from "@/firebase";
 import { app } from "@/firebase";
 import { getAuth } from "firebase/auth";
+import ColorTheme from "./colortheme";
+import ResetPwd from "./resetPwd";
+import SettingsPage from "./settingsPage";
 export default function NoteContent() {
-  const { selectedNotes, formatDate, isNewNote, textInput, setTextInput} = useNoteContext();
+  const { selectedNotes, formatDate, showSettings, selectedSetting, isNewNote, textInput, setTextInput} = useNoteContext();
   const userId = "YbzpPIhpIWfW7VNLE5FnJTCiU602" //getAuth(app).currentUser?.uid
   
  
-  console.log(userId)
   useEffect(()=>{
     if(isNewNote){
       setTextInput({
@@ -86,11 +88,16 @@ export default function NoteContent() {
   }
 
 
-  
+
 
   return (
-    <div className={`w-[60%] mt-[20px] ml-[20px]`}>
-      <input
+    <div className={`w-[60%] mt-[20px] ${showSettings? 'ml-[5px] w-[70%]': 'ml-[20px]'}`}>
+      {showSettings? <SettingsPage /> :
+        
+         <>
+         {(selectedNotes || isNewNote) &&
+         <>
+        <input
         className="border-none outline-none w-[100%] h-[30px] font-inter font-[500] text-[24px] text-[#0E121B] mb-3 placeholder:text-[#0E121B] placeholder:font-[700]"
         type="text"
         value={textInput?.title}
@@ -149,6 +156,11 @@ export default function NoteContent() {
           Cancel
         </button>
       </div>
+      </>
+        }
+        </>
+}
+    
     </div>
   );
 }

@@ -37,8 +37,15 @@ export interface Note{
       handleSearchValue: (e: React.ChangeEvent<HTMLInputElement>)=> void,
       showSearchResult: boolean,
       showSettings: boolean,
+      showSettingsBtn:()=>void,
       setShowSettings: React.Dispatch<React.SetStateAction<boolean>>,
     setTextInput: React.Dispatch<React.SetStateAction<Note>>,
+    selectedSetting: number,
+    colorTheme: string,
+    setColorTheme: React.Dispatch<React.SetStateAction<string>>,
+    fontTheme:string,
+    setFontTheme: React.Dispatch<React.SetStateAction<string>>,
+    setSelectedSetting:React.Dispatch<React.SetStateAction<number>>,
     
   };
 

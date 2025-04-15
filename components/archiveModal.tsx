@@ -8,6 +8,7 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
   } from "@/components/ui/alert-dialog"
+import { useNoteContext } from "@/context/noteContext"
 import Image from "next/image"
 
   type ArchiveModalProps = {
@@ -16,6 +17,7 @@ import Image from "next/image"
 }
 
   export default function ArchiveModal({archOrRestNote}: ArchiveModalProps){
+    const {showArchivedNote} = useNoteContext()
     return(
   <AlertDialogContent>
     <AlertDialogHeader>
@@ -32,7 +34,7 @@ import Image from "next/image"
     </AlertDialogHeader>
     <AlertDialogFooter>
       <AlertDialogCancel className='bg-[#F3F5F8]'>Cancel</AlertDialogCancel>
-      <AlertDialogAction className="bg-[#335CFF]" onClick={archOrRestNote}>Archive Note</AlertDialogAction>
+      <AlertDialogAction className="bg-[#335CFF]" onClick={archOrRestNote}>{showArchivedNote? 'Archive Note': 'Restore Note'}</AlertDialogAction>
     </AlertDialogFooter>
   </AlertDialogContent>
     )

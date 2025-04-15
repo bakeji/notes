@@ -10,7 +10,7 @@ import Topnav from "./topnav";
 import { useNoteContext } from "@/context/noteContext";
 export default function AllNotes(){ 
     const userId = "YbzpPIhpIWfW7VNLE5FnJTCiU602" //getAuth(app).currentUser?.uid
-    const { selectedNotes, textInput } = useNoteContext()
+    const { selectedNotes, showSettings,notes, archivedNotes, textInput } = useNoteContext()
 
      async function archiveNotes(){
        const db = getDatabase(app);
@@ -67,6 +67,7 @@ export default function AllNotes(){
 
     }
 
+    
     return(
             <div className="w-[100%]">
                 <Topnav/>
@@ -78,7 +79,7 @@ export default function AllNotes(){
                     
                     <NoteContent />
                     <hr />
-                    <ArcAndDel archiveNotes={archiveNotes} deleteNote={deleteNote} restoreNotes={restoreNotes} />
+                 {(selectedNotes && !showSettings) && (<ArcAndDel archiveNotes={archiveNotes} deleteNote={deleteNote} restoreNotes={restoreNotes} />)}
                     
 
                 </div>

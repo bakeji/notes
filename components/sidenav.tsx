@@ -7,7 +7,7 @@ export default function SideBar(){
     const allTags = notes.flatMap((note) => note.tags);
     const uniqueTags = [...new Set(allTags)].sort();
     return(
-        <div className="w-[18%] pt-[20px] box-border ">
+        <div className="w-[18%] pt-[20px] box-border border-r h-[100vh]  ">
             <div>
                 <Image width={95} height={28} src="/logo.png" alt="logo" />
             </div>

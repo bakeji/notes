@@ -1,30 +1,37 @@
 'use client'
 import { useNoteContext } from "@/context/noteContext"
+import Settings from "./settings";
 
 
 export default function NoteList(){
-    const {handleNoteClick, formatDate, selectedNotes, createNewNote, archivedNotes, notes, showAllNote, showTags, selectedTag, showArchivedNote, searchValue, showSearchResult} =useNoteContext();
+    const {handleNoteClick, formatDate, selectedNotes, createNewNote, showSettings, archivedNotes, notes, showAllNote, showTags, selectedTag, showArchivedNote, searchValue, showSearchResult} =useNoteContext();
     const notesArrays = showAllNote? notes :archivedNotes
     const searchResults = notesArrays?.filter((note) => note.title.toLowerCase().includes(searchValue.toLowerCase()) || note.content.toLowerCase().includes(searchValue.toLowerCase()) ||note.tags.some((tag) => tag.toLowerCase().includes(searchValue.toLowerCase())))
-    console.log(searchResults)
     const notesArray = showSearchResult? searchResults: notesArrays
     const allNotesArray = selectedTag!==''? showTags: notesArray
     
-    
 
     return(
-        <div className="w-[25%] border-r-[1px] border-solid border-[#E0E4EA]">
+        <div className="w-[25%] border-r h-[100vh] border-solid border-[#E0E4EA]">
+           {showSettings?
+           <Settings /> :
+           (<>
             <button onClick={createNewNote} className="mt-[10px] w-[95%] font-inter text-[#ffffff] font-[500] text-[14px] bg-[#335CFF] rounded-[8px] p-[10px]"> + Create New Note</button>
 
             <div className="w-[95%] flex justify-center gap-2 flex-col mt-[20px]">
                {selectedTag!=="" && <p className="font-inter text-[14px] font-[400] text-[#2B303B] ">{`All notes with the ”${selectedTag}” tag are shown here.`}</p> }
                {showArchivedNote && <p className="font-inter text-[14px] font-[400] text-[#2B303B] ">All your archived notes are stored here. You can restore or delete them anytime.</p>}
-               {!archivedNotes && showArchivedNote  && <div className="bg-[#F3F5F8] rounded-[6px] w-[100%] border-[1px] border-solid border-[#E0E4EA] p-[2px]">
+               {showArchivedNote && notesArray.length < 1  && <div className="bg-[#F3F5F8] rounded-[6px] w-[100%] border-[1px] border-solid border-[#E0E4EA] p-[2px]">
                     <p>No notes have been archived yet. Move notes here for safekeeping, or create a new note.</p>
                 </div>}
               {showSearchResult && searchResults.length <1 &&  <div className="bg-[#F3F5F8] rounded-[6px] w-[100%] border-[1px] border-solid border-[#E0E4EA] p-[1px] ">
                     <p>No notes match your search. Try a different keyword or <span className="text-[#0E121B]"><button onClick={createNewNote} className="underline  outline-none">create a new note.</button></span></p>
                 </div>}
+
+                { showAllNote && notes.length < 1 && <div className="bg-[#F3F5F8] rounded-[6px] w-[100%] border-[1px] border-solid border-[#E0E4EA] p-[1px] ">
+                    <p>You don’t have any notes yet. Start a new note to capture your thoughts and ideas.</p>
+                </div>}
+
                 {allNotesArray?.map((note, index)=>(
                 <div key={index} className={`w-[100%] border-t-[1px] border-solid border-[#E0E4EA] p-[2px] ${selectedNotes && selectedNotes === note? "bg-[#F3F5F8] rounded-[6px] border-none": ''}`} >
                     <p onClick={()=>{handleNoteClick(index)}} className=" cursor-pointer font-inter text-[16px] font-[600] text-[#0E121B] lin">{note?.title}</p>
@@ -37,6 +44,8 @@ export default function NoteList(){
                 </div>
                 ))}
             </div>
+            </>
+        )}
         </div>
     )
 }

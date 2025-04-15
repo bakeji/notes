@@ -20,10 +20,14 @@ export default function Page(){
   const [selectedNotes, setSelectedNote] = useState<Note | null>(null);
   const [showAllNote, setShowAllNote] = useState(true)
   const [showArchivedNote, setShowArchivedNote] = useState(false)
-  const [isNewNote, setIsNewNote] = useState(true)
+  const [isNewNote, setIsNewNote] = useState(false)
   const [searchValue, setSearchValue]= useState('')
   const [showSearchResult, setShowSearchResult] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
+  const [selectedSetting, setSelectedSetting] = useState(1)
+  const [colorTheme, setColorTheme] = useState('Light Mode')
+  const [fontTheme, setFontTheme] = useState('Sans-serif')
+
   console.log(archivedNotes)
   console.log(notes)
   console.log(showArchivedNote)
@@ -86,6 +90,7 @@ function showAllNoteBtn(){
   setSelectedNote(notes[0])
   setSelectedTag('')
   setShowSearchResult(false)
+  setShowSettings(false)
 }
 
 //  show Archived Notes button
@@ -96,6 +101,7 @@ function showArchivedNoteBtn(){
   setIsNewNote(false)
   setSelectedTag('')
   setShowSearchResult(false)
+  setShowSettings(false)
 }
 // show selected tags
 function showSelectedTagBtn(tag:string){
@@ -104,6 +110,12 @@ function showSelectedTagBtn(tag:string){
   setIsNewNote(false)
   setSelectedTag(tag)
   setShowSearchResult(false)
+  setShowSettings(false)
+}
+function showSettingsBtn(){
+  setShowSettings(true)
+  setShowAllNote(false)
+  setShowAllNote(false)
 }
 useEffect(()=>{
   if(selectedTag !== ''){
@@ -117,6 +129,7 @@ function createNewNote(){
   console.log('new')
   setSelectedNote(null)
   setShowSearchResult(false)
+  setShowSettings(false)
 }
 function handleSearchValue(e:React.ChangeEvent<HTMLInputElement>){
   setSearchValue(e.target.value)
@@ -126,6 +139,10 @@ function handleSearchValue(e:React.ChangeEvent<HTMLInputElement>){
 useEffect(()=>{
   if(searchValue !== ''){
   setShowSearchResult(true)
+  if(showSettings){
+    setShowSettings(false)
+    setShowAllNote(true)
+  }
 }else{
   setShowSearchResult(false)
 }
@@ -146,10 +163,9 @@ function formatDate(isoDateString: string): string {
   return `${day} ${monthName} ${year}`;
 }
   return(
-    <NoteContext.Provider value={{notes, showSettings, setShowSettings, showSearchResult, archivedNotes, selectedTag, searchValue, handleSearchValue, textInput, setTextInput, showTags, showSelectedTagBtn, handleNoteClick, selectedNotes, formatDate, showAllNote, showArchivedNote, showAllNoteBtn, showArchivedNoteBtn, createNewNote, isNewNote}}>
+    <NoteContext.Provider value={{notes,colorTheme,fontTheme, setFontTheme, setColorTheme, showSettings, showSettingsBtn, selectedSetting, setSelectedSetting, setShowSettings, showSearchResult, archivedNotes, selectedTag, searchValue, handleSearchValue, textInput, setTextInput, showTags, showSelectedTagBtn, handleNoteClick, selectedNotes, formatDate, showAllNote, showArchivedNote, showAllNoteBtn, showArchivedNoteBtn, createNewNote, isNewNote}}>
     <div className="flex w-[100%] px-[20px] h-screen box-border " >
       <SideBar/>
-      <hr className="h-[100%] border-[1px] border-[#E0E4EA]"/>
       <AllNotes />
     </div>
     </NoteContext.Provider>
