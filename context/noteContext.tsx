@@ -48,7 +48,19 @@ export interface Note{
     fontTheme:string,
     setFontTheme: React.Dispatch<React.SetStateAction<string>>,
     setSelectedSetting:React.Dispatch<React.SetStateAction<number>>,
-    
+    theme:string,
+    setTheme: React.Dispatch<React.SetStateAction<string>>,
+    navId: number,
+    setNavId:React.Dispatch<React.SetStateAction<number>>,
+    showClickedNote:boolean,
+    setShowClickedNote: React.Dispatch<React.SetStateAction<boolean>>,
+    showAllTags:boolean, 
+    setShowAllTags: React.Dispatch<React.SetStateAction<boolean>>,
+    showAllTagsBtn: ()=>void
+    showSearchBar: boolean,
+    setShowSearchBar: React.Dispatch<React.SetStateAction<boolean>>,
+    showSelectedSetting: boolean,
+    setShowSelectedSetting:React.Dispatch<React.SetStateAction<boolean>>,
   };
 
 export const NoteContext = createContext<notestype | undefined>(undefined);

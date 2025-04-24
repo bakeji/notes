@@ -10,10 +10,18 @@ import { getAuth } from "firebase/auth";
 import ColorTheme from "./colortheme";
 import ResetPwd from "./resetPwd";
 import SettingsPage from "./settingsPage";
-export default function NoteContent() {
-  const { selectedNotes, formatDate, showSettings, selectedSetting, isNewNote, textInput, setTextInput} = useNoteContext();
-  const userId = "YbzpPIhpIWfW7VNLE5FnJTCiU602" //getAuth(app).currentUser?.uid
-  
+import NoteNav from "./noteNav";
+import { useRouter } from "next/navigation";
+
+export type ArcAndDelProps = {
+  archiveNotes: ()=>void,
+  restoreNotes: ()=>void,
+   deleteNote:   ()=>void
+}
+export default function NoteContent({archiveNotes, restoreNotes,  deleteNote}: ArcAndDelProps) {
+  const { selectedNotes, formatDate, showSettings, showSelectedSetting, setNavId, selectedSetting, showClickedNote, isNewNote, textInput, setTextInput} = useNoteContext();
+  const userId = getAuth(app).currentUser?.uid
+  const router = useRouter()
  
   useEffect(()=>{
     if(isNewNote){
@@ -82,8 +90,14 @@ export default function NoteContent() {
           });
         }
       }
+      else{
+        router.push('/login')
+      }
     } catch (error) {
       console.error("Error saving note:", error);
+    }
+    finally{
+      setNavId(1)
     }
   }
 
@@ -91,14 +105,15 @@ export default function NoteContent() {
 
 
   return (
-    <div className={`w-[60%] mt-[20px] ${showSettings? 'ml-[5px] w-[70%]': 'ml-[20px]'}`}>
+    <div className={`w-[60%] mt-[20px]  ${showSettings? 'ml-[5px] w-[70%] max-lg:block ': 'ml-[20px]'} ${showClickedNote || showSelectedSetting||isNewNote?'max-lg:block max-lg:ml-0 max-lg:w-[95%] max-lg:mx-auto ' : 'max-lg:hidden'}  `}>
       {showSettings? <SettingsPage /> :
         
          <>
          {(selectedNotes || isNewNote) &&
          <>
+          <NoteNav saveNote={saveNote} archiveNotes={archiveNotes} deleteNote={deleteNote} restoreNotes={restoreNotes} />
         <input
-        className="border-none outline-none w-[100%] h-[30px] font-inter font-[500] text-[24px] text-[#0E121B] mb-3 placeholder:text-[#0E121B] placeholder:font-[700]"
+        className="border-none outline-none max-lg:mb-4 w-[100%] h-[30px] font-inter font-[500] text-[24px] text-[#0E121B] mb-3 placeholder:text-[#0E121B] placeholder:font-[700]"
         type="text"
         value={textInput?.title}
         onChange={handleChange}
@@ -106,7 +121,7 @@ export default function NoteContent() {
         placeholder={textInput?.title ? "" : "Enter a title..."}
       />
       <div className="flex items-start flex-col gap-3 border-b-[1px] border-solid w-[95%]">
-        <div className="flex w-[100%] items-center justify-center ">
+        <div className="flex w-[100%] items-center justify-center max-lg:mb-5 ">
           <p className="flex items-center justify-start w-[30%] gap-1 font-inter text-[14px] font-[400] text-[#2B303B]">
             <span>
               {" "}
@@ -124,7 +139,7 @@ export default function NoteContent() {
           />
         </div>
 
-        <div className="flex w-[100%] items-center justify-center mb-[10px]">
+        <div className="flex w-[100%] items-center justify-center mb-[10px] max-lg:mb-5">
           <p className="flex items-center justify-start w-[30%] gap-1 font-inter text-[14px] font-[400] text-[#2B303B]">
             <span>
               {" "}
@@ -138,7 +153,7 @@ export default function NoteContent() {
         </div>
       </div>
 
-      <div className="w-[95%] h-[60%]  border-b-[1px] border-solid">
+      <div className="w-[95%] h-[60%] max-lg:pt-3  border-b-[1px] border-solid max-lg:border-none">
         <textarea
           className=" whitespace-pre-wrap font-inter resize-none text-[14px] w-[100%] h-[100%] font-[400] text-[#232530] border-none outline-none placeholder:text-[#2B303B]"
           value={textInput.content}
@@ -148,7 +163,7 @@ export default function NoteContent() {
         />
       </div>
 
-      <div className="flex items-start mt-[20px] gap-4 ">
+      <div className="flex items-start mt-[20px] gap-4 max-lg:hidden ">
         <button onClick={saveNote} className="w-[107px] h-[37px] px-[12px] text-center rounded-[8px] font-inter font-[500] text-[14px] bg-[#335CFF] text-[#FFFFFF]">
           Save Note
         </button>

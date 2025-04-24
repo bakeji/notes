@@ -58,31 +58,31 @@ const [errorMessages, setErrorMessages] = useState('')
         
       }
     return(
-        <div className="flex flex-col">
+        <div className="flex flex-col max-lg:w-full">
              { showToast && <Toast toastMessage= {toastMessage}/>}
             <div className="mt-4 flex flex-col gap-4">
              
                 <h1 className="text-[14px] font-inter font-[500] text-[#0E121B]">Change Password</h1>
-                <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-                    <div className=" flex flex-col w-[65%] gap-2">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-3 max-lg:w-[95%] ">
+                    <div className=" flex flex-col w-[65%] gap-2 max-lg:w-full">
                             <label className="font-inter text-[14px] font-[500] text-[#0E121B]" htmlFor="password">Old Password</label>
                             <Password formPassword = {formDetails.password} handleChange = {handleChange} name ='password'/>
                     </div>
 
-                   <div className=" flex flex-col w-[65%] gap-2">
+                   <div className=" flex flex-col w-[65%] gap-2 max-lg:w-full">
                         <label className="font-inter text-[14px] font-[500] text-[#0E121B]" htmlFor="password">New Password</label>
                         <Password formPassword = {formDetails.password} handleChange = {handleChange} name ='password'/>
                         <p className={`text-[12px] font-inter flex items-center gap-2 text-[#525866] ${ !goodPasswordLength?'text-red-600': 'font-[400]'}`}> <Image width={16} height={16} src={!goodPasswordLength ?'/info red.png' : '/info.png'} alt="info"/>At least 8 characters</p>
                     </div>
 
-                    <div className=" flex flex-col w-[65%] gap-2">
+                    <div className=" flex flex-col w-[65%] gap-2 max-lg:w-full">
                         <label className="font-inter text-[14px] font-[500] text-[#0E121B]" htmlFor="password">Confirm New Password</label>
                         <Password formPassword = {formDetails.repeatPassword} name="repeatPassword" handleChange = {handleChange}/>
                        {!passwordMatch && <p className="text-[12px] gap-2 font-inter flex items-center font-[500 ] text-red-600"> <Image width={16} height={16} src="/info red.png" alt="info"/>password do not match</p>}
                     </div>
                   
 
-                    <div className='mt-4 flex items-center justify-end w-[65%]'>
+                    <div className='mt-4 flex items-center justify-end w-[65%] max-lg:w-full'>
                 <button type="submit" className='bg-[#335CFF] p-3 text-white rounded-[8px] text-[14px] font-[500]' >Save Password</button>
             </div>
                    

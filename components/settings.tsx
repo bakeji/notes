@@ -2,9 +2,10 @@
 
 import { useNoteContext } from "@/context/noteContext"
 import Image from "next/image"
+import LogOut from "./logoutModal"
 
 export default function Settings(){
-    const {selectedSetting, setSelectedSetting} = useNoteContext()
+    const {selectedSetting, setSelectedSetting, showSelectedSetting, setShowSelectedSetting} = useNoteContext()
     const settingContent = [
         {title:"Color Theme", img:"/sun.png", id:1},
         {title:"Font Theme", img:"/Type.png", id:2},
@@ -12,25 +13,23 @@ export default function Settings(){
     ]
     function selectSetting(id:number){
         setSelectedSetting(id)
+        setShowSelectedSetting(true)
     }
 
     return(
         <div className="flex flex-col mt-[20px]">
+            <h1 className="hidden max-lg:block text-[24px] text-[#0E121B] font-[700]">Settings</h1>
             {settingContent.map((content)=>(
-            <div key={content.id}  className={`flex items-center w-[90%] p-2 justify-between mt-[10px] ${selectedSetting=== content.id?'bg-[#F3F5F8]': "" } `}>
+            <div key={content.id}  className={`flex items-center w-[90%] p-2 justify-between mt-[10px] ${selectedSetting=== content.id?'bg-[#F3F5F8] max-lg:bg-transparent': "" } `}>
                <button onClick={()=>selectSetting(content.id)} className="flex items-center gap-2 font-inter text-[14px] font-[500] text-[#0E121B]" >
                <Image width={20} height={20} src={content.img} alt={content.img} />
                 {content.title}
                </button>
-              {selectedSetting===content.id && <img src="/right.png" alt="arrow" />}
+              {selectedSetting===content.id && <img className="max-lg:hidden" src="/right.png" alt="arrow" />}
             </div>
             ))}
              <div  className={`flex items-center p-3 mt-[20px] border-t w-[90%] justify-between {'bg-[#F3F5F8]': "" } `}>
-               <button  className="flex items-center gap-2 font-inter text-[14px] font-[500] text-[#0E121B]" >
-               <Image width={20} height={20} src='/Logout.png' alt='logout' />
-               Logout
-               </button>
-              {/* { <img src="/right.png" alt="arrow" />} */}
+               <LogOut />
             </div>
         </div>
 

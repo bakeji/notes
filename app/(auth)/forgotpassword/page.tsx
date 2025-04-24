@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function ForgotPassword(){
     return(
         <div className="w-[100%] h-[100vh]  flex justify-center items-center bg-[#F3F5F8]">
-            <div className="bg-white h-fit w-[39%] my-[0] mx-[auto] flex flex-col items-center border-[1px] border-s-[#E0E4EA] shadow-lg rounded-[12px] p-[20px]">
+            <div className="bg-white h-fit w-[39%] my-[0] mx-[auto] flex flex-col items-center border-[1px] border-s-[#E0E4EA] shadow-lg rounded-[12px] p-[20px] max-lg:w-[60%] max-md:w-[90%]">
                 <div className="mb-[20px]"> 
                     <Image width={95} height={28} src="/logo.png" alt="logo"/>
                 </div>

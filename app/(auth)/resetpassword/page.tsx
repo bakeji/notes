@@ -69,15 +69,16 @@ const { toast } = useToast()
       }
     return(
         <div className="w-[100%] h-[100vh]  flex justify-center items-center bg-[#F3F5F8]">
-             {showError && 
-             <Alert variant="destructive">
-                <AlertCircle className="h-4 w-4" />
-                <AlertTitle>Error</AlertTitle>
-                <AlertDescription>
-                    {errorMessages}
-                </AlertDescription>
-            </Alert>}
-            <div className="bg-white h-fit w-[39%] my-[0] mx-[auto] flex flex-col items-center border-[1px] border-s-[#E0E4EA] shadow-lg rounded-[12px] p-[20px]">
+            
+            <div className="bg-white h-fit w-[39%] my-[0] mx-[auto] flex flex-col items-center border-[1px] border-s-[#E0E4EA] shadow-lg rounded-[12px] p-[20px] max-lg:w-[60%] max-md:w-[90%]">
+            {showError && 
+                <Alert variant="destructive">
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertTitle>Error</AlertTitle>
+                    <AlertDescription>
+                        {errorMessages}
+                    </AlertDescription>
+                </Alert>}
                 <div className="mb-[20px]"> 
                     <Image width={95} height={28} src="/logo.png" alt="logo"/>
                 </div>

@@ -17,7 +17,7 @@ export default function ArcAndDel({archiveNotes, restoreNotes, deleteNote}: ArcA
     const {showArchivedNote} = useNoteContext()
     const archOrRestNote =showArchivedNote? restoreNotes: archiveNotes
     return(
-        <div className="w-[25%] flex flex-col items-start gap-4 border-l-[1px] ">
+        <div className="w-[25%] flex max-lg:hidden flex-col items-start gap-4 border-l-[1px] ">
               <AlertDialog>
                 <AlertDialogTrigger className="mt-[20px] ml-[20px] p-[8px] flex items-center justify-start gap-2 border-[1px] w-[90%] rounded-[8px] border-[#CACFD8] font-inter text-[14px] font-[500] text-[#0E121B]">
                 <Image width={20} height={20} src={showArchivedNote?"/restore.png": "/Archive.png" }alt="Archive" />

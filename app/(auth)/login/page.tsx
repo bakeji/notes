@@ -65,9 +65,9 @@ export default function LogIn(){
         }
       
     return(
-        <div className="w-[100%] h-[100vh]  flex justify-center items-center bg-[#F3F5F8]">
+        <div className="w-[100%] h-[100vh] flex justify-center items-center bg-[#F3F5F8]">
 
-            <div className="bg-white h-fit w-[35%] my-[0] mx-[auto] flex flex-col items-center border-[1px] border-s-[#E0E4EA] shadow-lg rounded-[12px] p-[24px]">
+            <div className="bg-white h-fit w-[35%] my-[0] mx-[auto] flex flex-col items-center border-[1px] border-s-[#E0E4EA] shadow-lg rounded-[12px] p-[24px] max-lg:w-[60%] max-md:w-[90%]">
                            {showError && <Alert variant="destructive">
                     <AlertCircle className="h-4 w-4" />
                     <AlertTitle>Error</AlertTitle>

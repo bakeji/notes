@@ -7,12 +7,13 @@ import { getDatabase, push, ref, set, get, onValue } from "firebase/database";
 import { database } from "@/firebase";
 import { app } from "@/firebase";
 import { getAuth } from "firebase/auth";
+import BottomNav from "@/components/bottom-nav";
+import Image from "next/image";
 
 
 export default function Page(){
-  // const notes = data.notes;
   
-  const userId = "YbzpPIhpIWfW7VNLE5FnJTCiU602" //getAuth(app).currentUser?.uid
+  const userId = getAuth(app).currentUser?.uid
   const [notes, setNotes] = useState<Note[]>([])
   const [archivedNotes, setArchivedNotes] = useState<Note[]>([])
   const [selectedTag, setSelectedTag] = useState('')
@@ -25,12 +26,14 @@ export default function Page(){
   const [showSearchResult, setShowSearchResult] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
   const [selectedSetting, setSelectedSetting] = useState(1)
+  const [showSelectedSetting, setShowSelectedSetting] = useState(false)
   const [colorTheme, setColorTheme] = useState('Light Mode')
+  const [theme, setTheme] = useState(colorTheme)
   const [fontTheme, setFontTheme] = useState('Sans-serif')
-
-  console.log(archivedNotes)
-  console.log(notes)
-  console.log(showArchivedNote)
+  const [navId, setNavId]= useState(1)
+  const [showAllTags, setShowAllTags] = useState(false)
+  const [showClickedNote, setShowClickedNote] = useState(false)
+  const [showSearchBar, setShowSearchBar] = useState(false)
    const [textInput, setTextInput] = useState<Note>({
       title: ""  ,
       tags:[],
@@ -80,6 +83,7 @@ function handleNoteClick(id:number){
     setSelectedNote(notes[id]) 
     }
     setIsNewNote(false)
+    setShowClickedNote(true)  //for mobile and tab screen
 }
 
 // show all note button
@@ -89,8 +93,10 @@ function showAllNoteBtn(){
   setShowArchivedNote(false)
   setSelectedNote(notes[0])
   setSelectedTag('')
+  setShowSearchBar(false)
   setShowSearchResult(false)
   setShowSettings(false)
+  setShowAllTags(false)
 }
 
 //  show Archived Notes button
@@ -101,8 +107,19 @@ function showArchivedNoteBtn(){
   setIsNewNote(false)
   setSelectedTag('')
   setShowSearchResult(false)
+  setShowSearchBar(false)
   setShowSettings(false)
+  setShowAllTags(false)
 }
+// show all tags for mobile and tab screens
+function showAllTagsBtn(){
+  setShowAllTags(true)
+  setShowSearchBar(false)
+  setIsNewNote(false)
+  // setShowAllNote(false)
+  // setShowArchivedNote(false)
+}
+console.log(showAllTags)
 // show selected tags
 function showSelectedTagBtn(tag:string){
   setShowAllNote(false)
@@ -110,12 +127,17 @@ function showSelectedTagBtn(tag:string){
   setIsNewNote(false)
   setSelectedTag(tag)
   setShowSearchResult(false)
+  // setShowClickedNote(true)   // mobile and tab screen
   setShowSettings(false)
+  setShowAllTags(false) // mobile and tab screen
 }
 function showSettingsBtn(){
   setShowSettings(true)
+  setIsNewNote(false)
   setShowAllNote(false)
   setShowAllNote(false)
+  setShowSearchBar(false)
+  setShowAllTags(false)
 }
 useEffect(()=>{
   if(selectedTag !== ''){
@@ -126,10 +148,12 @@ useEffect(()=>{
 // create new note
 function createNewNote(){
   setIsNewNote(true)
-  console.log('new')
   setSelectedNote(null)
   setShowSearchResult(false)
   setShowSettings(false)
+  setShowAllTags(false)
+  setShowSearchBar(false)
+  setNavId(0)
 }
 function handleSearchValue(e:React.ChangeEvent<HTMLInputElement>){
   setSearchValue(e.target.value)
@@ -162,11 +186,17 @@ function formatDate(isoDateString: string): string {
 
   return `${day} ${monthName} ${year}`;
 }
+console.log(showSelectedSetting)
+console.log(showSettings)
   return(
-    <NoteContext.Provider value={{notes,setShowArchivedNote, setShowAllNote ,colorTheme,fontTheme, setFontTheme, setColorTheme, showSettings, showSettingsBtn, selectedSetting, setSelectedSetting, setShowSettings, showSearchResult, archivedNotes, selectedTag, searchValue, handleSearchValue, textInput, setTextInput, showTags, showSelectedTagBtn, handleNoteClick, selectedNotes, formatDate, showAllNote, showArchivedNote, showAllNoteBtn, showArchivedNoteBtn, createNewNote, isNewNote}}>
-    <div className="flex w-[100%] px-[20px] h-screen box-border " >
-      <SideBar/>
-      <AllNotes />
+    <NoteContext.Provider value={{notes, theme,showSelectedSetting, setShowSelectedSetting, setShowClickedNote, showAllTags,showAllTagsBtn, setShowAllTags, showClickedNote , setTheme,navId, setNavId, setShowArchivedNote, setShowAllNote ,colorTheme,fontTheme, setFontTheme, setColorTheme, showSettings, showSettingsBtn, selectedSetting, setSelectedSetting, setShowSettings, showSearchResult, archivedNotes, selectedTag, searchValue, handleSearchValue, textInput, setTextInput, showTags, showSelectedTagBtn, handleNoteClick, selectedNotes, formatDate, showAllNote, showArchivedNote, showAllNoteBtn, showArchivedNoteBtn, createNewNote, isNewNote, showSearchBar, setShowSearchBar}}>
+    <div className={`flex w-[100%] px-[20px] h-screen box-border ${theme==='Dark Mode'? '.dark': ''}  max-lg:flex-col max-lg:px-0`} >
+        <div className="hidden max-lg:block  bg-[#F3F5F8] h-[74px] p-3">
+          <Image width={95} height={28} src="/logo.png" alt="logo" />
+        </div>
+        <SideBar/>
+        <AllNotes />
+        <BottomNav />
     </div>
     </NoteContext.Provider>
   

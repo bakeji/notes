@@ -113,9 +113,8 @@ export default function AllNotes(){
                 <div className="ml-8 flex justify-between ">
                     <NoteList />
                     <hr />
-        
-                    
-                    <NoteContent />
+      
+                    <NoteContent archiveNotes={archiveNotes} deleteNote={deleteNote} restoreNotes={restoreNotes}  />
                     <hr />
                  {(selectedNotes && !showSettings) && (<ArcAndDel archiveNotes={archiveNotes} deleteNote={deleteNote} restoreNotes={restoreNotes} />)}
                     

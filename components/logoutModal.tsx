@@ -1,0 +1,54 @@
+'use client'
+import {
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+     AlertDialog,
+    AlertDialogTrigger,
+  } from "@/components/ui/alert-dialog"
+import { getAuth, signOut } from "firebase/auth";
+import { app } from "@/firebase";
+import Image from "next/image"
+import { useRouter } from "next/navigation";
+export default function LogOut(){
+       const router = useRouter()
+
+    function logOutBtn(){
+        const auth = getAuth();
+            signOut(auth).then(() => {
+                router.push('/login')
+            
+            })
+
+    }
+    
+    return(
+         <AlertDialog>
+            <AlertDialogTrigger className="flex items-center gap-2 font-inter text-[14px] font-[500] text-[#0E121B] border-none outline-none"> 
+                <Image width={20} height={20} src='/Logout.png' alt='logout' />
+                Logout
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                
+                <AlertDialogTitle className="flex items-center gap-6">
+                    <Image src="/Logout.png" alt="archive" width={20} height={20}></Image>  
+                Logout
+                </AlertDialogTitle>
+                <AlertDialogDescription className="pl-10">
+                Are you sure you want to Logout?
+                </AlertDialogDescription>
+                
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                <AlertDialogCancel className='bg-[#F3F5F8]'>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={logOutBtn} className="bg-[#FB3748]" >Logout</AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>       
+    )
+}

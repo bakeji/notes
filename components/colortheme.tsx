@@ -2,7 +2,7 @@ import { useNoteContext } from '@/context/noteContext'
 import Image from 'next/Image'
 
 export default function ColorTheme(){
-    const {colorTheme, setColorTheme} = useNoteContext()
+    const {colorTheme, setColorTheme, setTheme} = useNoteContext()
     const themes =[
         {id:1, title:'Light Mode', desc:"Pick a clean and classic light theme", img:'/sun.png'},
         {id:2, title:'Dark Mode', desc:"Select a sleek and modern dark theme", img: '/Dark mode.png'},
@@ -12,13 +12,13 @@ export default function ColorTheme(){
         setColorTheme(e.target.value)
     }
     return(
-        <div className='flex flex-col ' >
+        <div className='flex flex-col max-lg:w-full ' >
             <h1 className='text-[#0E121B] font-inter text-[16px] font-[600]'>Color Theme</h1>
             <p className='font-inter text-[14px] font-[400] text-[#2B303B]'>Choose your color theme:</p>
             
-            <div className='mt-6 flex flex-col gap-4'>
+            <div className='mt-6 flex flex-col gap-4 max-lg:w-full'>
                 {themes.map((theme)=>(
-                <div className='flex items-center border border-[#E0E4EA] rounded-[12px] p-2 w-[65%] pl-4' key={theme.id}>
+                <div className='flex items-center border border-[#E0E4EA] rounded-[12px] p-2 w-[65%] max-lg:w-full pl-4' key={theme.id}>
                     <div className='flex items-center gap-4 w-[95%]'>
                         <div className='h-[40px] w-[40px] rounded-[12px] flex items-center justify-center border border-[#E0E4EA] bg-[#ffffff]'>
                         <Image width='24' height='24' src={theme.img} alt={theme.title} />
@@ -41,8 +41,8 @@ export default function ColorTheme(){
                 ))}
             </div>
             
-            <div className='mt-8 flex items-center justify-end w-[65%]'>
-                <button className='bg-[#335CFF] p-3 text-white rounded-[8px]  font-[500] text-[14px]' >Apply Changes</button>
+            <div className='mt-8 flex items-center justify-end w-[65%] max-lg:w-full '>
+                <button onClick={()=>setTheme(colorTheme)} className='bg-[#335CFF] p-3 text-white rounded-[8px]  font-[500] text-[14px]' >Apply Changes</button>
             </div>
 
         </div>
