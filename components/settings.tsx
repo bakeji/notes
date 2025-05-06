@@ -25,7 +25,7 @@ export default function Settings(){
                <Image width={20} height={20} src={ theme==='Dark Mode'? content.drk : content.img} alt={content.img} />
                 {content.title}
                </button>
-              {selectedSetting===content.id && <img className="max-lg:hidden" src="/right.png" alt="arrow" />}
+              {selectedSetting===content.id && <Image width={10} height={6} className="max-lg:hidden" src="/right.png" alt="arrow" />}
             </div>
             ))}
              <div  className={`flex items-center p-3 mt-[20px] ${theme==='Dark Mode'? 'text-white':'' } border-t w-[90%] justify-between {'bg-[#F3F5F8]': "" } `}>

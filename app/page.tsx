@@ -64,14 +64,14 @@ export default function Page(){
   
  useEffect(()=>{
   GetNotes()
- }, [])
+ }, [GetNotes])
 
  useEffect(() => {
   if (notes.length > 0 && !selectedNotes) {
     setSelectedNote(notes[0]);
     setIsNewNote(false)
   }
-}, [notes]);
+}, [notes, selectedNotes]);
   
 function handleNoteClick(id:number){
   if (showArchivedNote){
@@ -142,7 +142,7 @@ useEffect(()=>{
   if(selectedTag !== ''){
   setSelectedNote(showTags[0])
   }
-},[selectedTag, showSelectedTagBtn])
+},[selectedTag, showSelectedTagBtn, showTags])
 
 // create new note
 function createNewNote(){
@@ -169,7 +169,7 @@ useEffect(()=>{
 }else{
   setShowSearchResult(false)
 }
-}, [searchValue])
+}, [searchValue, showSettings])
 
 function formatDate(isoDateString: string): string {
   const date = new Date(isoDateString);
