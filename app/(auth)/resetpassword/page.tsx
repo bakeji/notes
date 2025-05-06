@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { getAuth, updatePassword, User } from "firebase/auth";
 import {app} from "@/firebase";
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useToast } from "@/hooks/use-toast";
 import { AlertCircle } from "lucide-react";
 import Loading from "@/components/loading";
