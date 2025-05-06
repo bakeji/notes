@@ -42,7 +42,7 @@ export default function Page(){
     });
 
 
-  const GetNotes = useCallback(()=>{
+  const GetNotes = useCallback(async ()=>{
   const db = getDatabase(app);
   const noteRef = ref(db,'users/notes/'+ userId)
   onValue(noteRef, (snapshot) => {
@@ -120,7 +120,7 @@ function showAllTagsBtn(){
 }
 
 // show selected tags
-function showSelectedTagBtn(tag:string){
+const showSelectedTagBtn= useCallback((tag:string)=>{
   setShowAllNote(false)
   setShowArchivedNote(false)
   setIsNewNote(false)
@@ -129,7 +129,7 @@ function showSelectedTagBtn(tag:string){
   // setShowClickedNote(true)   // mobile and tab screen
   setShowSettings(false)
   setShowAllTags(false) // mobile and tab screen
-}
+}, [])
 function showSettingsBtn(){
   setShowSettings(true)
   setIsNewNote(false)
