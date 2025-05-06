@@ -18,8 +18,9 @@ export type ArcAndDelProps = {
   restoreNotes: ()=>void,
    deleteNote:   ()=>void
 }
+
 export default function NoteContent({archiveNotes, restoreNotes,  deleteNote}: ArcAndDelProps) {
-  const { selectedNotes, formatDate, showSettings, showSelectedSetting, setNavId, selectedSetting, showClickedNote, isNewNote, textInput, setTextInput} = useNoteContext();
+  const { selectedNotes, formatDate, showSettings, showSelectedSetting, setNavId, theme, selectedSetting, showClickedNote, isNewNote, textInput, setTextInput} = useNoteContext();
   const userId = getAuth(app).currentUser?.uid
   const router = useRouter()
  
@@ -71,7 +72,12 @@ export default function NoteContent({archiveNotes, restoreNotes,  deleteNote}: A
     const currentTimestamp = new Date().toISOString();
     
     try {
-      if (userId) {
+      if (!userId) {
+        router.push('/login')
+        console.log('id not available')
+        return;
+
+      }
         if (!isNewNote && selectedNotes && selectedNotes.id) {
           const specificNoteRef = ref(db, `users/notes/${userId}/${selectedNotes.id}`);
           
@@ -89,10 +95,7 @@ export default function NoteContent({archiveNotes, restoreNotes,  deleteNote}: A
             id: newKey
           });
         }
-      }
-      else{
-        router.push('/login')
-      }
+    
     } catch (error) {
       console.error("Error saving note:", error);
     }
@@ -105,7 +108,7 @@ export default function NoteContent({archiveNotes, restoreNotes,  deleteNote}: A
 
 
   return (
-    <div className={`w-[60%] mt-[20px]  ${showSettings? 'ml-[5px] w-[70%] max-lg:block ': 'ml-[20px]'} ${showClickedNote || showSelectedSetting||isNewNote?'max-lg:block max-lg:ml-0 max-lg:w-[95%] max-lg:mx-auto ' : 'max-lg:hidden'}  `}>
+    <div className={`w-[50%] pt-5 pl-4 mr-auto border-r max-lg:border-none ${showSettings? 'ml-[5px] w-[70%] max-lg:block ': 'ml-[20px'} ${showClickedNote || showSelectedSetting||isNewNote?'max-lg:block max-lg:ml-0 max-lg:w-[95%] max-lg:mx-auto ' : 'max-lg:hidden'}  `}>
       {showSettings? <SettingsPage /> :
         
          <>
@@ -113,16 +116,16 @@ export default function NoteContent({archiveNotes, restoreNotes,  deleteNote}: A
          <>
           <NoteNav saveNote={saveNote} archiveNotes={archiveNotes} deleteNote={deleteNote} restoreNotes={restoreNotes} />
         <input
-        className="border-none outline-none max-lg:mb-4 w-[100%] h-[30px] font-inter font-[500] text-[24px] text-[#0E121B] mb-3 placeholder:text-[#0E121B] placeholder:font-[700]"
+        className={`border-none outline-none  max-lg:mb-4 w-[100%] h-[30px] bg-transparent font-inter font-[500] text-[24px] text-[#0E121B] mb-3 placeholder:text-[#0E121B] placeholder:font-[700] ${theme==='Dark Mode'? 'placeholder:text-white text-white':'' }`}
         type="text"
         value={textInput?.title}
         onChange={handleChange}
         name="title"
         placeholder={textInput?.title ? "" : "Enter a title..."}
       />
-      <div className="flex items-start flex-col gap-3 border-b-[1px] border-solid w-[95%]">
+      <div className={` ${theme==='Dark Mode'? 'text-white':'' } text-[#2B303B] flex items-start flex-col gap-3 border-b-[1px] border-solid w-[95%]`}>
         <div className="flex w-[100%] items-center justify-center max-lg:mb-5 ">
-          <p className="flex items-center justify-start w-[30%] gap-1 font-inter text-[14px] font-[400] text-[#2B303B]">
+          <p className="flex items-center justify-start w-[30%] gap-1 font-inter text-[14px] font-[400] ">
             <span>
               {" "}
               <Image width={16} height={16} src="/Tag.png" alt="tag" />
@@ -130,7 +133,7 @@ export default function NoteContent({archiveNotes, restoreNotes,  deleteNote}: A
             Tags
           </p>
           <input
-            className="w-[100%] border-none outline-none font-inter text-[14px] font-[400] text-[#2B303B] "
+            className={` w-[100%] border-none outline-none bg-transparent font-inter text-[14px] font-[400]  ${theme==='Dark Mode'? 'placeholder:text-white text-white':'' } `}
             type="text"
             value={(textInput?.tags || []).join(", ")}
             onChange={handleChange}
@@ -140,7 +143,7 @@ export default function NoteContent({archiveNotes, restoreNotes,  deleteNote}: A
         </div>
 
         <div className="flex w-[100%] items-center justify-center mb-[10px] max-lg:mb-5">
-          <p className="flex items-center justify-start w-[30%] gap-1 font-inter text-[14px] font-[400] text-[#2B303B]">
+          <p className="flex items-center justify-start w-[30%] gap-1 font-inter text-[14px] font-[400]">
             <span>
               {" "}
               <Image width={16} height={16} src="/clock.png" alt="clock" />
@@ -155,7 +158,7 @@ export default function NoteContent({archiveNotes, restoreNotes,  deleteNote}: A
 
       <div className="w-[95%] h-[60%] max-lg:pt-3  border-b-[1px] border-solid max-lg:border-none">
         <textarea
-          className=" whitespace-pre-wrap font-inter resize-none text-[14px] w-[100%] h-[100%] font-[400] text-[#232530] border-none outline-none placeholder:text-[#2B303B]"
+          className={`${theme==='Dark Mode'? 'text-white placeholder:text-white':'' } whitespace-pre-wrap font-inter resize-none text-[14px] bg-transparent w-[100%] h-[100%] font-[400] text-[#232530] border-none outline-none placeholder:text-[#2B303B]`}
           value={textInput.content}
           onChange={handleChange}
           name="content"
@@ -163,11 +166,11 @@ export default function NoteContent({archiveNotes, restoreNotes,  deleteNote}: A
         />
       </div>
 
-      <div className="flex items-start mt-[20px] gap-4 max-lg:hidden ">
+      <div className="flex items-start py-4  gap-4 max-lg:hidden ">
         <button onClick={saveNote} className="w-[107px] h-[37px] px-[12px] text-center rounded-[8px] font-inter font-[500] text-[14px] bg-[#335CFF] text-[#FFFFFF]">
           Save Note
         </button>
-        <button className="w-[87px] h-[37px] px-[12px] text-center rounded-[8px] font-inter font-[500] text-[14px] bg-[#F3F5F8] text-[#525866]">
+        <button className="w-[87px] h-[37px] px-[12px] text-center bg-transparent border rounded-[8px] font-inter font-[500] text-[14px] bg-[#F3F5F8] text-[#525866]">
           Cancel
         </button>
       </div>

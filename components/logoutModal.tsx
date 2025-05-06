@@ -14,9 +14,10 @@ import { getAuth, signOut } from "firebase/auth";
 import { app } from "@/firebase";
 import Image from "next/image"
 import { useRouter } from "next/navigation";
+import { useNoteContext } from "@/context/noteContext";
 export default function LogOut(){
        const router = useRouter()
-
+    const {theme} = useNoteContext()
     function logOutBtn(){
         const auth = getAuth();
             signOut(auth).then(() => {
@@ -28,14 +29,14 @@ export default function LogOut(){
     
     return(
          <AlertDialog>
-            <AlertDialogTrigger className="flex items-center gap-2 font-inter text-[14px] font-[500] text-[#0E121B] border-none outline-none"> 
-                <Image width={20} height={20} src='/Logout.png' alt='logout' />
+            <AlertDialogTrigger className={`flex items-center gap-2 font-inter text-[14px] font-[500] text-[#0E121B] border-none outline-none ${theme==='Dark Mode'? 'text-white':'' }`}> 
+                <Image width={20} height={20} src={theme==='Dark Mode'? '/Logout-drk.png' :'/Logout.png'} alt='logout' />
                 Logout
             </AlertDialogTrigger>
-            <AlertDialogContent>
-                <AlertDialogHeader>
+            <AlertDialogContent className={`${theme==='Dark Mode'? 'bg-[#232530] ':'' }`}>
+                <AlertDialogHeader className={`${theme==='Dark Mode'? ' text-white':'' }`}>
                 
-                <AlertDialogTitle className="flex items-center gap-6">
+                <AlertDialogTitle className={` flex items-center gap-6 `}>
                     <Image src="/Logout.png" alt="archive" width={20} height={20}></Image>  
                 Logout
                 </AlertDialogTitle>

@@ -17,9 +17,9 @@ import Image from "next/image"
 }
 
   export default function ArchiveModal({archOrRestNote}: ArchiveModalProps){
-    const {showArchivedNote} = useNoteContext()
+    const {showArchivedNote, theme} = useNoteContext()
     return(
-  <AlertDialogContent>
+  <AlertDialogContent className={`${theme==='Dark Mode'? 'bg-[#232530] text-white':'' }`} >
     <AlertDialogHeader>
     
       <AlertDialogTitle className="flex items-center gap-6">

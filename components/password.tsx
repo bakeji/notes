@@ -18,7 +18,7 @@ export default function Password({formPassword, handleChange, name}:formTypes){
     }
 
     return(
-         <div className="flex justify-between items-center border-s-[#CACFD8] w-[100%] border-[1px] rounded-[8px] h-[32px] p-[18px] shadow-sm ">
+         <div className="flex justify-between items-center  w-[100%] border rounded-[8px] h-[32px] p-[18px] shadow-sm ">
                             <input className="font-inter text-[14px] w-[90%] h-[32px] font-[400] border-none outline-none box-border bg-transparent" 
                             type={showPassWord? "text" : "password"} 
                             name={name}

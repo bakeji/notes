@@ -99,7 +99,7 @@ export default function AllNotes(){
 
     
     return(
-            <div className="w-[100%]">
+            <div className="w-[100%] h-screen flex flex-col">
                 <Topnav/>
                 <hr />
                 {showError && 
@@ -110,10 +110,11 @@ export default function AllNotes(){
                         {errorMessage}
                     </AlertDescription>
                   </Alert>}
-                <div className="ml-8 flex justify-between ">
+                <div className="ml-8 flex flex-1 justify-between">
                     <NoteList />
                     <hr />
-      
+        
+                    
                     <NoteContent archiveNotes={archiveNotes} deleteNote={deleteNote} restoreNotes={restoreNotes}  />
                     <hr />
                  {(selectedNotes && !showSettings) && (<ArcAndDel archiveNotes={archiveNotes} deleteNote={deleteNote} restoreNotes={restoreNotes} />)}

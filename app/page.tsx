@@ -3,8 +3,7 @@ import AllNotes from "@/components/allNotes";
 import SideBar from "@/components/sidenav";
 import { Note, NoteContext } from "@/context/noteContext";
 import { useEffect, useState } from "react";
-import { getDatabase, push, ref, set, get, onValue } from "firebase/database";
-import { database } from "@/firebase";
+import { getDatabase, ref,  onValue } from "firebase/database";
 import { app } from "@/firebase";
 import { getAuth } from "firebase/auth";
 import BottomNav from "@/components/bottom-nav";
@@ -85,6 +84,8 @@ function handleNoteClick(id:number){
     setIsNewNote(false)
     setShowClickedNote(true)  //for mobile and tab screen
 }
+console.log(userId)
+
 
 // show all note button
 function showAllNoteBtn(){
@@ -116,10 +117,8 @@ function showAllTagsBtn(){
   setShowAllTags(true)
   setShowSearchBar(false)
   setIsNewNote(false)
-  // setShowAllNote(false)
-  // setShowArchivedNote(false)
 }
-console.log(showAllTags)
+
 // show selected tags
 function showSelectedTagBtn(tag:string){
   setShowAllNote(false)
@@ -186,11 +185,10 @@ function formatDate(isoDateString: string): string {
 
   return `${day} ${monthName} ${year}`;
 }
-console.log(showSelectedSetting)
-console.log(showSettings)
+
   return(
     <NoteContext.Provider value={{notes, theme,showSelectedSetting, setShowSelectedSetting, setShowClickedNote, showAllTags,showAllTagsBtn, setShowAllTags, showClickedNote , setTheme,navId, setNavId, setShowArchivedNote, setShowAllNote ,colorTheme,fontTheme, setFontTheme, setColorTheme, showSettings, showSettingsBtn, selectedSetting, setSelectedSetting, setShowSettings, showSearchResult, archivedNotes, selectedTag, searchValue, handleSearchValue, textInput, setTextInput, showTags, showSelectedTagBtn, handleNoteClick, selectedNotes, formatDate, showAllNote, showArchivedNote, showAllNoteBtn, showArchivedNoteBtn, createNewNote, isNewNote, showSearchBar, setShowSearchBar}}>
-    <div className={`flex w-[100%] px-[20px] h-screen box-border ${theme==='Dark Mode'? '.dark': ''}  max-lg:flex-col max-lg:px-0`} >
+    <div className={`flex  w-[100%] px-[20px] h-screen box-border ${theme==='Dark Mode'? 'dark bg-background text-white  ': ''}  max-lg:flex-col max-lg:px-0`} >
         <div className="hidden max-lg:block  bg-[#F3F5F8] h-[74px] p-3">
           <Image width={95} height={28} src="/logo.png" alt="logo" />
         </div>
