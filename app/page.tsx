@@ -42,29 +42,29 @@ export default function Page(){
     });
 
 
-  const GetNotes = useCallback(async ()=>{
-  const db = getDatabase(app);
-  const noteRef = ref(db,'users/notes/'+ userId)
-  onValue(noteRef, (snapshot) => {
-    if (snapshot.exists()) {
-      const notesData = snapshot.val();
-     const allNotes= Object.values(notesData) as Note[];
-     const sortedArray = allNotes.sort((a, b) =>b.lastEdited.localeCompare(a.lastEdited) )
-     const notesArray = sortedArray.filter((note) => note.isArchived === false);
-     const archivedNotesArray = sortedArray.filter((note) => note.isArchived === true);
-      setNotes(notesArray)
-      setArchivedNotes(archivedNotesArray)
-
-}else{
-  setNotes([])
-}
-  })
-  }, [userId])
+  
 
   
  useEffect(()=>{
+  const GetNotes = ()=>{
+    const db = getDatabase(app);
+    const noteRef = ref(db,'users/notes/'+ userId)
+    onValue(noteRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const notesData = snapshot.val();
+       const allNotes= Object.values(notesData) as Note[];
+       const sortedArray = allNotes.sort((a, b) =>b.lastEdited.localeCompare(a.lastEdited) )
+       const notesArray = sortedArray.filter((note) => note.isArchived === false);
+       const archivedNotesArray = sortedArray.filter((note) => note.isArchived === true);
+        setNotes(notesArray)
+        setArchivedNotes(archivedNotesArray)
+  
+  }else{
+    setNotes([])
+  }})
+    }
   GetNotes()
- }, [GetNotes])
+}, [userId])
 
  useEffect(() => {
   if (notes.length > 0 && !selectedNotes) {
