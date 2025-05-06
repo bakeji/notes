@@ -64,7 +64,7 @@ export default function Page(){
   
  useEffect(()=>{
   GetNotes()
- },[])
+ }, [])
 
  useEffect(() => {
   if (notes.length > 0 && !selectedNotes) {

@@ -5,11 +5,9 @@ import { app } from "@/firebase";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from 'next/navigation'
 import SignUpWithGoogle from "../google";
-import Toast from "@/components/toast";
 import Password from "@/components/password";
 import Loading from "@/components/loading";
-import ToastError from "@/components/errortoast";
-import { toast, useToast } from "@/hooks/use-toast";
+import { toast} from "@/hooks/use-toast";
 import { AlertCircle } from "lucide-react"
  import {
   Alert,
@@ -17,7 +15,7 @@ import { AlertCircle } from "lucide-react"
   AlertTitle,
 } from "@/components/ui/alert"
 
-export default function signup(){
+export default function Signup(){
     const [formDetails, setFormDetails] = useState({
         email: "",
         password: ""
@@ -26,7 +24,6 @@ export default function signup(){
     const [showError, setShowError] = useState(false)
     const [errorMessages, setErrorMessages] = useState('')
     const [loading, setLoading] = useState(false)
-    const [visible, setVisible] = useState(true);
     const router = useRouter()
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -47,8 +44,6 @@ export default function signup(){
           
           if (goodPasswordLength && formDetails.password !== '' && formDetails.email !== '') {
             const userCredential = await createUserWithEmailAndPassword(auth, formDetails.email, formDetails.password);
-            const user = userCredential.user;
-            console.log(user.uid)
             toast({
               description: 'Sign up successful'
             })

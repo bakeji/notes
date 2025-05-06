@@ -3,9 +3,9 @@ import { useState } from "react";
 import ArcAndDel from "./arcAndDel";
 import NoteContent from "./notecontent";
 import NoteList from "./notelist";
+import  Image from "next/image";
 import { app } from "@/firebase";
-import { getAuth } from "firebase/auth";
-import { getDatabase, push, ref, set, get, update, remove } from "firebase/database";
+import { getDatabase, ref,  update, remove } from "firebase/database";
 import Topnav from "./topnav";
 import { useNoteContext } from "@/context/noteContext";
 import { useToast } from "@/hooks/use-toast";
@@ -43,7 +43,7 @@ export default function AllNotes(){
         }
         finally{
           toast({
-            description: <p className="flex items-center justify-center gap-2"> <img src="/check.png" alt="check" /> Note archived </p>,
+            description: <p className="flex items-center justify-center gap-2"> <Image src="/check.png" width={10} height={6} alt="check" /> Note archived </p>,
             action: <ToastAction onClick={()=>{setShowArchivedNote(true); setShowAllNote(false)}} altText="achived note">Archived Notes</ToastAction>,
           })
 
@@ -71,7 +71,7 @@ export default function AllNotes(){
       }
        finally{
         toast({
-          description: <p className="flex items-center justify-center gap-2"> <img src="/check.png" alt="check" /> Note Restored </p>,
+          description: <p className="flex items-center justify-center gap-2"> <Image src="/check.png" width={10} height={6} alt="check" /> Note Restored </p>,
           action: <ToastAction onClick={()=>{setShowAllNote(true); setShowArchivedNote(false)}} altText="achived note">All Notes</ToastAction>,
         })
        }

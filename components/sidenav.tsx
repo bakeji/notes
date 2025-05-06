@@ -3,7 +3,7 @@ import { useNoteContext } from "@/context/noteContext";
 import Image from "next/image"
 
 export default function SideBar(){
-    const {notes, showAllNote, showAllNoteBtn, showAllTags,  theme, showArchivedNote,showClickedNote, showArchivedNoteBtn, showSelectedTagBtn, selectedTag} = useNoteContext()
+    const {notes, showAllNote, showAllNoteBtn, showAllTags,  theme, showArchivedNote, showArchivedNoteBtn, showSelectedTagBtn, selectedTag} = useNoteContext()
     const allTags = notes.flatMap((note) => note.tags);
     const uniqueTags = [...new Set(allTags)].sort();
     return(

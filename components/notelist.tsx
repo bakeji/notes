@@ -1,7 +1,6 @@
 'use client'
 import { useNoteContext } from "@/context/noteContext"
 import Settings from "./settings";
-import NoteNav from "./noteNav";
 import Image from "next/image";
 import Search from "./search";
 

@@ -14,7 +14,6 @@ export default function SignUpWithGoogle(){
     signInWithPopup(auth, provider)
 
     .then((result) => {
-        const user = result.user;
         console.log('signup sucessful')
         router.push('/')
       }).catch((error) => {

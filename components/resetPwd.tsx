@@ -4,9 +4,16 @@ import Image from "next/image";
 import { useState } from "react";
 import { getAuth, updatePassword, User } from "firebase/auth";
 import {app} from "@/firebase";
-import Toast from "@/components/toast";
 import { useNoteContext } from "@/context/noteContext";
-
+import { useToast } from "@/hooks/use-toast";
+import { AlertCircle } from "lucide-react"
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert"
+import Loading from "./loading";
+ 
 
 
 export default function ResetPwd(){
@@ -16,11 +23,10 @@ const [formDetails, setFormDetails] = useState({
 })
 const [passwordMatch, setPasswordMatch] = useState(false)
 const [goodPasswordLength, setGoodPasswordLength] = useState(true)
-const [showToast, setShowToast] = useState(false)
-const [toastMessage, setToastMessage] = useState('')
 const [loading, setLoading] = useState(false)
 const [showError, setShowError] = useState(false)
 const [errorMessages, setErrorMessages] = useState('')
+const { toast } = useToast()
 const {theme} = useNoteContext()
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -42,9 +48,11 @@ const {theme} = useNoteContext()
         if (passwordMatch && goodPasswordLength) {
             const user = auth.currentUser as User;
             await updatePassword(user, formDetails.password);
-            setShowToast(true);
-            setToastMessage('Password reset successful');
+            toast({
+                description: 'Password reset successful'
+            })
           }else {
+            setLoading(false)
             setShowError(true);
             setErrorMessages('Password do not match or password is less than 8 characters');
           } 
@@ -60,7 +68,14 @@ const {theme} = useNoteContext()
       }
     return(
         <div className={`flex flex-col max-lg:w-full `}>
-             { showToast && <Toast toastMessage= {toastMessage}/>}
+                {showError && <Alert variant="destructive">
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertTitle>Error</AlertTitle>
+                    <AlertDescription>
+                        {errorMessages}
+                    </AlertDescription>
+                    </Alert>}
+
             <div className="mt-4 flex flex-col gap-4">
              
                 <h1 className={`${theme==='Dark Mode'? 'text-white':'' } text-[14px] font-inter font-[500] text-[#0E121B]`}>Change Password</h1>
@@ -84,7 +99,7 @@ const {theme} = useNoteContext()
                   
 
                     <div className='mt-4 flex items-center justify-end w-[65%] max-lg:w-full'>
-                <button type="submit" className='bg-[#335CFF] p-3 text-white rounded-[8px] text-[14px] font-[500]' >Save Password</button>
+                <button type="submit" className='bg-[#335CFF] p-3 text-white rounded-[8px] text-[14px] font-[500]' >{loading? <Loading /> : "Save Password"}</button>
             </div>
                    
                 </form>

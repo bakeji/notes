@@ -45,7 +45,6 @@ export default function LogIn(){
             const auth = getAuth(app);
         if (formDetails.email !== "" && formDetails.password !== "") {
             const userCredential = await signInWithEmailAndPassword(auth, formDetails.email, formDetails.password);
-            const user = userCredential.user;
             toast({
                 description: 'Login sucessful'
             })

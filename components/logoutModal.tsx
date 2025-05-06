@@ -11,7 +11,6 @@ import {
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
 import { getAuth, signOut } from "firebase/auth";
-import { app } from "@/firebase";
 import Image from "next/image"
 import { useRouter } from "next/navigation";
 import { useNoteContext } from "@/context/noteContext";

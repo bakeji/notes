@@ -1,14 +1,10 @@
 "use client";
 import { useNoteContext } from "@/context/noteContext";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { Note } from "@/context/noteContext";
-import { getDatabase, push, ref, set, get } from "firebase/database";
-import { database } from "@/firebase";
+import { useEffect} from "react";
+import { getDatabase, push, ref, set} from "firebase/database";
 import { app } from "@/firebase";
 import { getAuth } from "firebase/auth";
-import ColorTheme from "./colortheme";
-import ResetPwd from "./resetPwd";
 import SettingsPage from "./settingsPage";
 import NoteNav from "./noteNav";
 import { useRouter } from "next/navigation";
@@ -20,7 +16,7 @@ export type ArcAndDelProps = {
 }
 
 export default function NoteContent({archiveNotes, restoreNotes,  deleteNote}: ArcAndDelProps) {
-  const { selectedNotes, formatDate, showSettings, showSelectedSetting, setNavId, theme, selectedSetting, showClickedNote, isNewNote, textInput, setTextInput} = useNoteContext();
+  const { selectedNotes, formatDate, showSettings, showSelectedSetting, setNavId, theme, showClickedNote, isNewNote, textInput, setTextInput} = useNoteContext();
   const userId = getAuth(app).currentUser?.uid
   const router = useRouter()
  
