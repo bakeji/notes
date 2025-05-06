@@ -2,7 +2,7 @@
 import AllNotes from "@/components/allNotes";
 import SideBar from "@/components/sidenav";
 import { Note, NoteContext } from "@/context/noteContext";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getDatabase, ref,  onValue } from "firebase/database";
 import { app } from "@/firebase";
 import { getAuth } from "firebase/auth";
@@ -42,7 +42,7 @@ export default function Page(){
     });
 
 
-  function GetNotes(){
+  const GetNotes = useCallback(()=>{
   const db = getDatabase(app);
   const noteRef = ref(db,'users/notes/'+ userId)
   onValue(noteRef, (snapshot) => {
@@ -59,7 +59,7 @@ export default function Page(){
   setNotes([])
 }
   })
-  }
+  }, [userId])
 
   
  useEffect(()=>{
@@ -142,7 +142,7 @@ useEffect(()=>{
   if(selectedTag !== ''){
   setSelectedNote(showTags[0])
   }
-},[selectedTag, showSelectedTagBtn, showTags])
+},[selectedTag, showTags])
 
 // create new note
 function createNewNote(){

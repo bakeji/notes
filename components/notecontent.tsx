@@ -40,7 +40,7 @@ export default function NoteContent({archiveNotes, restoreNotes,  deleteNote}: A
       });
       
     }
-  },[selectedNotes, isNewNote, setTextInput])
+  },[selectedNotes, isNewNote,])
 
 
 
