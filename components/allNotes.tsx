@@ -84,9 +84,10 @@ export default function AllNotes(){
            const specificNoteRef = ref(db, `users/notes/${userId}/${selectedNotes?.id}`);
            await remove(specificNoteRef);
         }
-      } catch (error:any) {
+      } catch (error) {
+        const errorMessage = (error as Error).message;
         toast({
-          description: error
+          description: errorMessage
         })
       }
        finally{

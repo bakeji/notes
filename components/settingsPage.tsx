@@ -5,7 +5,7 @@ import ResetPwd from "./resetPwd"
 import Image from "next/image"
 
 export default function SettingsPage(){
-    const{selectedSetting,showSettings, showSelectedSetting,setShowSelectedSetting } = useNoteContext()
+    const{selectedSetting,showSettings,setShowSelectedSetting } = useNoteContext()
     return(
         <>
         <button onClick={()=>setShowSelectedSetting(false)} className={`items-center  mb-3 font-inter text-[14px] font-[400] hidden max-lg:flex gap-2 `}> 

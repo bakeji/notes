@@ -13,7 +13,7 @@ export default function SignUpWithGoogle(){
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
 
-    .then((result) => {
+    .then(() => {
         console.log('signup sucessful')
         router.push('/')
       }).catch((error) => {
