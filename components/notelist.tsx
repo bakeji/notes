@@ -55,8 +55,8 @@ export default function NoteList(){
             </div>
             </>
         )}
-        <div className="hidden max-lg:flex items-end justify-end mb-40">
-            <button onClick={createNewNote} className="w-[64px] h-[64px] fixed bg-[#335CFF] font-[400] text-[32px] text-center text-white outline-none rounded-[50%]">+</button>
+        <div className="hidden max-lg:flex items-end justify-end mb-40 max-md:mb-28 ">
+            <button onClick={createNewNote} className=" w-[64px] h-[64px] max-sm:w-[42px] max-sm:h-[42px] max-sm:text-[21px] fixed bg-[#335CFF] font-[400] text-[32px] text-center text-white outline-none rounded-[50%]">+</button>
         </div>
 
         </div>
