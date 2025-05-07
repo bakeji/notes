@@ -192,8 +192,8 @@ function formatDate(isoDateString: string): string {
   return(
     <NoteContext.Provider value={{notes, setIsNewNote, fontType, setFontType, theme,showSelectedSetting, setShowSelectedSetting, setShowClickedNote, showAllTags,showAllTagsBtn, setShowAllTags, showClickedNote , setTheme,navId, setNavId, setShowArchivedNote, setShowAllNote ,colorTheme,fontTheme, setFontTheme, setColorTheme, showSettings, showSettingsBtn, selectedSetting, setSelectedSetting, setShowSettings, showSearchResult, archivedNotes, selectedTag, searchValue, handleSearchValue, textInput, setTextInput, showTags, showSelectedTagBtn, handleNoteClick, selectedNotes, formatDate, showAllNote, showArchivedNote, showAllNoteBtn, showArchivedNoteBtn, createNewNote, isNewNote, showSearchBar, setShowSearchBar}}>
     <div className={`flex  w-[100%] px-[20px] h-screen box-border ${theme==='Dark Mode'? 'dark bg-background text-white  ': ''}  max-lg:flex-col max-lg:px-0 ${fontType ==='Sans-serif'? 'font-sans' : fontType==='Serif'? 'font-serif' : 'font-mono'}`}   >
-        <div className="hidden max-lg:block  bg-[#F3F5F8] h-[74px] p-3">
-          <Image width={95} height={28} src="/logo.png" alt="logo" />
+        <div className={`hidden max-lg:block ${theme==='Dark Mode'? 'bg-transparent':  'bg-[#F3F5F8]' }h-[74px] p-3`}>
+          <Image width={95} height={28} src={theme==='Dark Mode'? "/logo-drk.png":"/logo.png"} alt="logo" />
         </div>
         <SideBar/>
         <AllNotes />

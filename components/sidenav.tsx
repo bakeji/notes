@@ -30,7 +30,7 @@ export default function SideBar(){
                     {showArchivedNote && <Image width={6} height={10} src={ theme==='Dark Mode'? "/right-drk.png":"/right.png"} alt="right" />}
                </div>
 
-                <hr />
+                <hr/>
             </div>
 
 
