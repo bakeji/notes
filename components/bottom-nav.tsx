@@ -30,9 +30,9 @@ export default function BottomNav(){
 
 
     return(
-        <div className="w-full h-[50px] shadow-md fixed bottom-0 border-t hidden border-[#E0E4EA] p-3 items-center justify-between max-lg:flex">
+        <div className="w-full h-[60px] shadow-md fixed bottom-0 border-t hidden border-[#E0E4EA] p-3  py-3 items-center justify-between max-lg:flex">
             {menuArray.map((menu)=>(
-            <button onClick={()=>navBtn(menu.id)} className={`outline-none h-[42px] w-[80px] flex flex-col text-[12px] gap-2 items-center justify-center ${navId === menu.id? 'bg-[#EBF1FF] rounded-[4px] text-[#335CFF]': ''} `} key={menu.id}>
+            <button onClick={()=>navBtn(menu.id)} className={`outline-none h-fit   w-[80px] flex flex-col text-[12px] gap-1 items-center justify-center pt-1 ${navId === menu.id? 'bg-[#EBF1FF] rounded-[4px] text-[#335CFF]': ''} `} key={menu.id}>
                 <Image src={navId===menu.id? menu.activeIcon: menu.icon} width={24} height={navId===5? 26: 24} alt={menu.title} />
                 {menu.title}
             </button>
