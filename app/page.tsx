@@ -29,6 +29,7 @@ export default function Page(){
   const [colorTheme, setColorTheme] = useState('Light Mode')
   const [theme, setTheme] = useState(colorTheme)
   const [fontTheme, setFontTheme] = useState('Sans-serif')
+  const [fontType, setFontType] = useState(fontTheme)
   const [navId, setNavId]= useState(1)
   const [showAllTags, setShowAllTags] = useState(false)
   const [showClickedNote, setShowClickedNote] = useState(false)
@@ -98,6 +99,7 @@ function showAllNoteBtn(){
   setShowSearchResult(false)
   setShowSettings(false)
   setShowAllTags(false)
+  setShowSelectedSetting(false)
 }
 
 //  show Archived Notes button
@@ -117,6 +119,7 @@ function showAllTagsBtn(){
   setShowAllTags(true)
   setShowSearchBar(false)
   setIsNewNote(false)
+  setShowSettings(false)
 }
 
 // show selected tags
@@ -187,8 +190,8 @@ function formatDate(isoDateString: string): string {
 }
 
   return(
-    <NoteContext.Provider value={{notes, theme,showSelectedSetting, setShowSelectedSetting, setShowClickedNote, showAllTags,showAllTagsBtn, setShowAllTags, showClickedNote , setTheme,navId, setNavId, setShowArchivedNote, setShowAllNote ,colorTheme,fontTheme, setFontTheme, setColorTheme, showSettings, showSettingsBtn, selectedSetting, setSelectedSetting, setShowSettings, showSearchResult, archivedNotes, selectedTag, searchValue, handleSearchValue, textInput, setTextInput, showTags, showSelectedTagBtn, handleNoteClick, selectedNotes, formatDate, showAllNote, showArchivedNote, showAllNoteBtn, showArchivedNoteBtn, createNewNote, isNewNote, showSearchBar, setShowSearchBar}}>
-    <div className={`flex  w-[100%] px-[20px] h-screen box-border ${theme==='Dark Mode'? 'dark bg-background text-white  ': ''}  max-lg:flex-col max-lg:px-0`} >
+    <NoteContext.Provider value={{notes, setIsNewNote, fontType, setFontType, theme,showSelectedSetting, setShowSelectedSetting, setShowClickedNote, showAllTags,showAllTagsBtn, setShowAllTags, showClickedNote , setTheme,navId, setNavId, setShowArchivedNote, setShowAllNote ,colorTheme,fontTheme, setFontTheme, setColorTheme, showSettings, showSettingsBtn, selectedSetting, setSelectedSetting, setShowSettings, showSearchResult, archivedNotes, selectedTag, searchValue, handleSearchValue, textInput, setTextInput, showTags, showSelectedTagBtn, handleNoteClick, selectedNotes, formatDate, showAllNote, showArchivedNote, showAllNoteBtn, showArchivedNoteBtn, createNewNote, isNewNote, showSearchBar, setShowSearchBar}}>
+    <div className={`flex  w-[100%] px-[20px] h-screen box-border ${theme==='Dark Mode'? 'dark bg-background text-white  ': ''}  max-lg:flex-col max-lg:px-0 ${fontType ==='Sans-serif'? 'font-sans' : fontType==='Serif'? 'font-serif' : 'font-mono'}`}   >
         <div className="hidden max-lg:block  bg-[#F3F5F8] h-[74px] p-3">
           <Image width={95} height={28} src="/logo.png" alt="logo" />
         </div>

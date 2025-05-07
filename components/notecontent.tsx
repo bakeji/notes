@@ -112,7 +112,7 @@ export default function NoteContent({archiveNotes, restoreNotes,  deleteNote}: A
          <>
           <NoteNav saveNote={saveNote} archiveNotes={archiveNotes} deleteNote={deleteNote} restoreNotes={restoreNotes} />
         <input
-        className={`border-none outline-none  max-lg:mb-4 w-[100%] h-[30px] bg-transparent font-inter font-[500] text-[24px] text-[#0E121B] mb-3 placeholder:text-[#0E121B] placeholder:font-[700] ${theme==='Dark Mode'? 'placeholder:text-white text-white':'' }`}
+        className={`border-none outline-none  max-lg:mb-4 w-[100%] h-[30px] bg-transparent  font-[500] text-[24px] text-[#0E121B] mb-3 placeholder:text-[#0E121B] placeholder:font-[700] ${theme==='Dark Mode'? 'placeholder:text-white text-white':'' }`}
         type="text"
         value={textInput?.title}
         onChange={handleChange}
@@ -121,7 +121,7 @@ export default function NoteContent({archiveNotes, restoreNotes,  deleteNote}: A
       />
       <div className={` ${theme==='Dark Mode'? 'text-white':'' } text-[#2B303B] flex items-start flex-col gap-3 border-b-[1px] border-solid w-[95%]`}>
         <div className="flex w-[100%] items-center justify-center max-lg:mb-5 ">
-          <p className="flex items-center justify-start w-[30%] gap-1 font-inter text-[14px] font-[400] ">
+          <p className="flex items-center justify-start w-[30%] gap-1  text-[14px] font-[400] ">
             <span>
               {" "}
               <Image width={16} height={16} src="/Tag.png" alt="tag" />
@@ -129,7 +129,7 @@ export default function NoteContent({archiveNotes, restoreNotes,  deleteNote}: A
             Tags
           </p>
           <input
-            className={` w-[100%] border-none outline-none bg-transparent font-inter text-[14px] font-[400]  ${theme==='Dark Mode'? 'placeholder:text-white text-white':'' } `}
+            className={` w-[100%] border-none outline-none bg-transparent  text-[14px] font-[400]  ${theme==='Dark Mode'? 'placeholder:text-white text-white':'' } `}
             type="text"
             value={(textInput?.tags || []).join(", ")}
             onChange={handleChange}
@@ -139,14 +139,14 @@ export default function NoteContent({archiveNotes, restoreNotes,  deleteNote}: A
         </div>
 
         <div className="flex w-[100%] items-center justify-center mb-[10px] max-lg:mb-5">
-          <p className="flex items-center justify-start w-[30%] gap-1 font-inter text-[14px] font-[400]">
+          <p className="flex items-center justify-start w-[30%] gap-1  text-[14px] font-[400]">
             <span>
               {" "}
               <Image width={16} height={16} src="/clock.png" alt="clock" />
             </span>
             Last edited
           </p>
-          <p className="w-[100%] border-none outline-none font-inter text-[14px] font-[400] text-[#99A0AE] ">
+          <p className="w-[100%] border-none outline-none text-[14px] font-[400] text-[#99A0AE] ">
             {textInput.lastEdited? formatDate(textInput.lastEdited): "Not yet saved"}            
           </p>
         </div>
@@ -154,7 +154,7 @@ export default function NoteContent({archiveNotes, restoreNotes,  deleteNote}: A
 
       <div className="w-[95%] h-[60%] max-lg:pt-3  border-b-[1px] border-solid max-lg:border-none">
         <textarea
-          className={`${theme==='Dark Mode'? 'text-white placeholder:text-white':'' } whitespace-pre-wrap font-inter resize-none text-[14px] bg-transparent w-[100%] h-[100%] font-[400] text-[#232530] border-none outline-none placeholder:text-[#2B303B]`}
+          className={`${theme==='Dark Mode'? 'text-white placeholder:text-white':'' } whitespace-pre-wrap  resize-none text-[14px] bg-transparent w-[100%] h-[100%] font-[400] text-[#232530] border-none outline-none placeholder:text-[#2B303B]`}
           value={textInput.content}
           onChange={handleChange}
           name="content"
@@ -163,10 +163,10 @@ export default function NoteContent({archiveNotes, restoreNotes,  deleteNote}: A
       </div>
 
       <div className="flex items-start py-4  gap-4 max-lg:hidden ">
-        <button onClick={saveNote} className="w-[107px] h-[37px] px-[12px] text-center rounded-[8px] font-inter font-[500] text-[14px] bg-[#335CFF] text-[#FFFFFF]">
+        <button onClick={saveNote} className="w-[107px] h-[37px] px-[12px] text-center rounded-[8px] font-[500] text-[14px] bg-[#335CFF] text-[#FFFFFF]">
           Save Note
         </button>
-        <button className="w-[87px] h-[37px] px-[12px] text-center bg-transparent border rounded-[8px] font-inter font-[500] text-[14px] bg-[#F3F5F8] text-[#525866]">
+        <button className="w-[87px] h-[37px] px-[12px] text-center bg-transparent border rounded-[8px]  font-[500] text-[14px] bg-[#F3F5F8] text-[#525866]">
           Cancel
         </button>
       </div>

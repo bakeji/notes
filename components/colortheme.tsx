@@ -22,8 +22,8 @@ export default function ColorTheme(){
     }
     return(
         <div className='flex flex-col max-lg:w-full ' >
-            <h1 className={`text-[#0E121B] font-inter text-[16px] font-[600] ${theme==='Dark Mode'? 'text-white':'' }`}>Color Theme</h1>
-            <p className={`font-inter text-[14px] font-[400] text-[#2B303B] ${theme==='Dark Mode'? 'text-white':'' }`}>Choose your color theme:</p>
+            <h1 className={`text-[#0E121B] text-[16px] font-[600] ${theme==='Dark Mode'? 'text-white':'' }`}>Color Theme</h1>
+            <p className={` text-[14px] font-[400] text-[#2B303B] ${theme==='Dark Mode'? 'text-white':'' }`}>Choose your color theme:</p>
             
             <div className='mt-6 flex flex-col gap-4 max-lg:w-full'>
                 {themes.map((themes)=>(
@@ -33,8 +33,8 @@ export default function ColorTheme(){
                         <Image width='24' height='24' src={theme==='Dark Mode'? themes.drk :themes.img} alt={themes.title} />
                         </div>
                         <label className='flex flex-col' htmlFor={themes.title}>
-                            <span className={`text-[14px] font-inter font-[500]  text-[#0E121B] ${theme==='Dark Mode'? 'text-white':'' } `}>{themes.title}</span>
-                            <span className={`last:text-[14px] font-inter font-[400] text-[#2B303B] ${theme==='Dark Mode'? 'text-white':'' }`}>{themes.desc}</span>
+                            <span className={`text-[14px]  font-[500]  text-[#0E121B] ${theme==='Dark Mode'? 'text-white':'' } `}>{themes.title}</span>
+                            <span className={`last:text-[14px]  font-[400] text-[#2B303B] ${theme==='Dark Mode'? 'text-white':'' }`}>{themes.desc}</span>
                         </label>
                     </div>
                     <input 

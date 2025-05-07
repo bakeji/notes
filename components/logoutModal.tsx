@@ -28,7 +28,7 @@ export default function LogOut(){
     
     return(
          <AlertDialog>
-            <AlertDialogTrigger className={`flex items-center gap-2 font-inter text-[14px] font-[500] text-[#0E121B] border-none outline-none ${theme==='Dark Mode'? 'text-white':'' }`}> 
+            <AlertDialogTrigger className={`flex items-center gap-2  text-[14px] font-[500] text-[#0E121B] border-none outline-none ${theme==='Dark Mode'? 'text-white':'' }`}> 
                 <Image width={20} height={20} src={theme==='Dark Mode'? '/Logout-drk.png' :'/Logout.png'} alt='logout' />
                 Logout
             </AlertDialogTrigger>

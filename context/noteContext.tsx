@@ -1,5 +1,5 @@
 'use client'
-import { createContext, useContext } from "react"
+import React, { createContext, useContext } from "react"
 
 
 export interface Note{
@@ -61,6 +61,9 @@ export interface Note{
     setShowSearchBar: React.Dispatch<React.SetStateAction<boolean>>,
     showSelectedSetting: boolean,
     setShowSelectedSetting:React.Dispatch<React.SetStateAction<boolean>>,
+    fontType:string,
+    setFontType:React.Dispatch<React.SetStateAction<string>>,
+    setIsNewNote: React.Dispatch<React.SetStateAction<boolean>>,
   };
 
 export const NoteContext = createContext<notestype | undefined>(undefined);

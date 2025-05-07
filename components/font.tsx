@@ -2,7 +2,7 @@ import { useNoteContext } from '@/context/noteContext'
 import Image from 'next/image'
 
 export default function FontTheme(){
-    const {fontTheme, theme, setFontTheme} = useNoteContext()
+    const {fontTheme, theme, setFontType, setFontTheme} = useNoteContext()
     const fonts =[
         {id:1, title:'Sans-serif', desc:"Clean and modern, easy to read.", img:'/sansserif.png', drk: '/sansserif-drk.png'},
         {id:2, title:'Serif', desc:"Classic and elegant for a timeless feel.", img: '/Serif.png', drk:'/serif-drk.png'},
@@ -14,8 +14,8 @@ export default function FontTheme(){
     }
     return(
         <div className='flex flex-col max-lg:w-full' >
-            <h1 className={`text-[#0E121B] font-inter text-[16px] font-[600] ${theme==='Dark Mode'? 'text-white':'' }`}>Font Theme</h1>
-            <p className={` ${theme==='Dark Mode'? 'text-white':'' } font-inter text-[14px] font-[400] text-[#2B303B]`}>Choose your font theme:</p>
+            <h1 className={`text-[#0E121B] text-[16px] font-[600] ${theme==='Dark Mode'? 'text-white':'' }`}>Font Theme</h1>
+            <p className={` ${theme==='Dark Mode'? 'text-white':'' } text-[14px] font-[400] text-[#2B303B]`}>Choose your font theme:</p>
             
             <div className='mt-6 flex flex-col gap-4 max-lg:w-full'>
                 {fonts.map((themes)=>(
@@ -25,8 +25,8 @@ export default function FontTheme(){
                         <Image width='18' height='12' src={theme==='Dark Mode'? themes.drk :themes.img} alt={themes.title} />
                         </div>
                         <label className='flex flex-col' htmlFor={themes.title}>
-                            <span className={` ${theme==='Dark Mode'? 'text-white':'' } text-[14px] font-inter font-[500]  text-[#0E121B]`}>{themes.title}</span>
-                            <span className={` ${theme==='Dark Mode'? 'text-white':'' } text-[14px] font-inter font-[400] text-[#2B303B]'`}>{themes.desc}</span>
+                            <span className={` ${theme==='Dark Mode'? 'text-white':'' } text-[14px]  font-[500]  text-[#0E121B]`}>{themes.title}</span>
+                            <span className={` ${theme==='Dark Mode'? 'text-white':'' } text-[14px]  font-[400] text-[#2B303B]'`}>{themes.desc}</span>
                         </label>
                     </div>
                     <input
@@ -43,7 +43,7 @@ export default function FontTheme(){
             </div>
             
             <div className='mt-8 flex items-center justify-end w-[65%] max-lg:w-full'>
-                <button className='bg-[#335CFF] p-3 text-white rounded-[8px]  font-[500] text-[14px]' >Apply Changes</button>
+                <button onClick={()=>setFontType(fontTheme)} className='bg-[#335CFF] p-3 text-white rounded-[8px]  font-[500] text-[14px]' >Apply Changes</button>
             </div>
 
         </div>
