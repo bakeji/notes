@@ -38,7 +38,7 @@ export default function NoteList(){
 
                 { showAllNote && notes.length < 1 && <div className={` ${theme==='Dark Mode'? 'bg-[#232530]':'' }bg-[#F3F5F8] rounded-[6px] w-[100%] border-[1px] border-solid border-[#E0E4EA] p-[1px] `}>
                     <p>You don’t have any notes yet. Start a new note to capture your thoughts and ideas.</p>
-                </div>}
+                </ div>}
                 
 
                 {allNotesArray?.map((note, index)=>(
@@ -55,7 +55,7 @@ export default function NoteList(){
             </div>
             </>
         )}
-        <div className="hidden max-lg:flex items-end justify-end mb-40 max-md:mb-28 ">
+        <div className="hidden max-lg:flex items-end justify-end mb-40 max-md:mb-36 ">
             <button onClick={createNewNote} className=" w-[64px] h-[64px] max-sm:w-[42px] max-sm:h-[42px] max-sm:text-[21px] fixed bg-[#335CFF] font-[400] text-[32px] text-center text-white outline-none rounded-[50%]">+</button>
         </div>
 
