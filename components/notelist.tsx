@@ -14,7 +14,7 @@ export default function NoteList(){
     
 
     return(
-        <div className={`w-[25%] border-r  border-solid ${showSelectedSetting ||isNewNote?'max-lg:hidden' : 'max-lg:block'}  max-lg:flex max-lg:flex-col max-lg:justify-between max-lg:w-[90%]   max-lg:border-none ${showClickedNote||showAllTags? 'max-lg:hidden': ''}`}>
+        <div className={`w-[100%] h-full border-r border-solid   max-lg:flex max-lg:flex-col max-lg:justify-between max-lg:border-none ${showClickedNote||showAllTags? 'max-lg:hidden': ''}`}>
            {showSettings?
            <Settings /> :
            (<>

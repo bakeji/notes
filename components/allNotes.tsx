@@ -7,6 +7,7 @@ import  Image from "next/image";
 import { app } from "@/firebase";
 import { getDatabase, ref,  update, remove } from "firebase/database";
 import Topnav from "./topnav";
+import { getAuth } from "firebase/auth";
 import { useNoteContext } from "@/context/noteContext";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
@@ -19,8 +20,8 @@ import {
 
 
 export default function AllNotes(){ 
-    const userId = "YbzpPIhpIWfW7VNLE5FnJTCiU602" //getAuth(app).currentUser?.uid
-    const { selectedNotes, setShowAllNote,showSettings,setShowArchivedNote, textInput } = useNoteContext()
+    const userId = getAuth(app).currentUser?.uid
+    const { selectedNotes, setShowAllNote,showSettings,setShowArchivedNote, showSelectedSetting, isNewNote, textInput } = useNoteContext()
     const { toast } = useToast()
     const [showError, setShowError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
@@ -100,7 +101,7 @@ export default function AllNotes(){
 
     
     return(
-            <div className="w-[100%] h-screen flex flex-col">
+            <div className="w-[100%] h-full min-h-screen flex flex-col">
                 <Topnav/>
                 <hr  className=" max-lg:hidden" />
                 {showError && 
@@ -111,8 +112,10 @@ export default function AllNotes(){
                         {errorMessage}
                     </AlertDescription>
                   </Alert>}
-                <div className="ml-8  max-lg:ml-4 flex flex-1 justify-between">
-                    <NoteList />
+                <div className="ml-8  max-lg:ml-4 flex flex-1 justify-between overflow-hidden">
+                   <div className={`overflow-y-auto max-h-[calc(100vh-80px)] w-[25%] max-lg:w-[90%] ${showSelectedSetting ||isNewNote?'max-lg:hidden' : 'max-lg:block'}`}>
+                   <NoteList />
+                   </div>
                     <hr />
         
                     
