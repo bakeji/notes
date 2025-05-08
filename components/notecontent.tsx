@@ -1,13 +1,15 @@
 "use client";
 import { useNoteContext } from "@/context/noteContext";
 import Image from "next/image";
-import { useEffect} from "react";
+import { useEffect, useState} from "react";
 import { getDatabase, push, ref, set} from "firebase/database";
 import { app } from "@/firebase";
 import { getAuth } from "firebase/auth";
 import SettingsPage from "./settingsPage";
 import NoteNav from "./noteNav";
 import { useRouter } from "next/navigation";
+import Loading from "./loading";
+
 
 export type ArcAndDelProps = {
   archiveNotes: ()=>void,
@@ -19,6 +21,7 @@ export default function NoteContent({archiveNotes, restoreNotes,  deleteNote}: A
   const { selectedNotes, formatDate, showSettings, showSelectedSetting, setNavId, theme, showClickedNote, isNewNote, textInput, setTextInput} = useNoteContext();
   const userId = getAuth(app).currentUser?.uid
   const router = useRouter()
+  const [loading, setLoading] = useState(false)
  
   useEffect(()=>{
     if(isNewNote){
@@ -63,6 +66,7 @@ export default function NoteContent({archiveNotes, restoreNotes,  deleteNote}: A
   }
 
   async function saveNote() {
+    setLoading(true)
     const db = getDatabase(app);
     const noteRef  = ref(db,'users/notes/'+ userId);
     const currentTimestamp = new Date().toISOString();
@@ -70,9 +74,7 @@ export default function NoteContent({archiveNotes, restoreNotes,  deleteNote}: A
     try {
       if (!userId) {
         router.push('/login')
-        console.log('id not available')
         return;
-
       }
         if (!isNewNote && selectedNotes && selectedNotes.id) {
           const specificNoteRef = ref(db, `users/notes/${userId}/${selectedNotes.id}`);
@@ -97,11 +99,9 @@ export default function NoteContent({archiveNotes, restoreNotes,  deleteNote}: A
     }
     finally{
       setNavId(1)
+      setLoading(false)
     }
   }
-
-
-
 
   return (
     <div className={`w-[50%] pt-5 pl-4 mr-auto border-r max-lg:border-none ${showSettings? 'ml-[5px] w-[70%] max-lg:block ': 'ml-[20px'} ${showClickedNote || showSelectedSetting||isNewNote?'max-lg:block max-lg:ml-0 max-lg:w-[95%] max-lg:mx-auto ' : 'max-lg:hidden'}  `}>
@@ -163,8 +163,8 @@ export default function NoteContent({archiveNotes, restoreNotes,  deleteNote}: A
       </div>
 
       <div className="flex items-start py-4  gap-4 max-lg:hidden ">
-        <button onClick={saveNote} className="w-[107px] h-[37px] px-[12px] text-center rounded-[8px] font-[500] text-[14px] bg-[#335CFF] text-[#FFFFFF]">
-          Save Note
+        <button onClick={saveNote} disabled={textInput.content.trim() ==='' } className={`w-[107px] h-[37px] px-[12px] text-center rounded-[8px] font-[500] text-[14px] bg-[#335CFF] text-[#FFFFFF] ${textInput.content.trim()=== ''? 'cursor-not-allowed bg-[#A7B2C1] text-[#FFFFFF]': ''}`}>
+          { loading? <Loading /> :'Save Note'}
         </button>
         <button className="w-[87px] h-[37px] px-[12px] text-center bg-transparent border rounded-[8px]  font-[500] text-[14px] bg-[#F3F5F8] text-[#525866]">
           Cancel
