@@ -8,6 +8,7 @@ import { app } from "@/firebase";
 import { getAuth } from "firebase/auth";
 import BottomNav from "@/components/bottom-nav";
 import Image from "next/image";
+import { useAppPersistence } from "@/hooks/appDb";
 
 
 export default function Page(){
@@ -44,10 +45,56 @@ export default function Page(){
 
 
   
+  const setters = {
+   userId: (_val:string) => {}, 
+   textInput: setTextInput,
+    colorTheme: setColorTheme,
+    theme: setTheme,
+    fontTheme: setFontTheme,
+    fontType: setFontType,
+    selectedTag: setSelectedTag,
+    navId: setNavId,
+    selectedSetting: setSelectedSetting,
+    isNewNote: setIsNewNote,
+  };
+
+  // Initialize persistence
+  const { saveState } = useAppPersistence({
+      userId,
+      textInput,
+      colorTheme,
+      theme,
+      fontTheme,
+      fontType,
+      selectedTag,
+      navId,
+      selectedSetting,
+      isNewNote,
+    }, setters);
+
+  // Save state when important values change
+  useEffect(() => {
+      if (userId) { 
+        saveState({
+          userId,
+          textInput,
+          colorTheme,
+          theme,
+          fontTheme,
+          fontType,
+          selectedTag,
+          navId,
+          selectedSetting,
+          isNewNote,
+        });
+      }
+    }, [userId, textInput, colorTheme, theme, fontTheme, fontType, selectedTag, navId, selectedSetting]);
+  
 
   
  useEffect(()=>{
   const GetNotes = ()=>{
+    if(!userId) return;
     const db = getDatabase(app);
     const noteRef = ref(db,'users/notes/'+ userId)
     onValue(noteRef, (snapshot) => {
